@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Empire OS — Sovereign Financial Engine · British AI Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#020812;--bg-card:#060F1F;--bg-alt:#08152A;--bg-deep:#010509;
+  --navy:#0A1830;--navy-mid:#0D2040;--navy-lt:#122848;
+  --blue:#3A8CC4;--blue-lt:#5AA8D8;--blue-ice:#9DC5DE;--blue-glow:rgba(58,140,196,0.15);
+  --gold:#C8A020;--gold-lt:#DDB93A;--gold-dim:#7A6018;--gold-glow:rgba(200,160,32,0.2);
+  --white:#EEF2F8;--cream:#E2DDD0;--grey:#7A8899;--grey-dk:#3D4B5C;
+  --border:#0E1E36;--border-lt:#182E4A;--border-gold:rgba(200,160,32,0.18);
+  --red:#B83232;--red-lt:#D04848;
+  --green:#2E7D52;--green-lt:#3AA068;--green-glow:rgba(46,125,82,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;min-height:100vh;overflow-x:hidden;line-height:1.5;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at top,var(--blue-glow) 0%,transparent 60%),radial-gradient(ellipse at bottom right,var(--gold-glow) 0%,transparent 70%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;mix-blend-mode:overlay;}
+
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px;}
+
+/* TYPOGRAPHY */
+.display{font-family:'Playfair Display',Georgia,serif;}
+.italic{font-style:italic;}
+.mono{font-family:'Courier Prime',Courier,monospace;}
+.sc{font-variant:small-caps;letter-spacing:0.14em;font-size:0.65rem;font-weight:600;}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--bg-deep);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1.2s ease;}
+#loader::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,var(--gold-glow) 0%,transparent 50%);}
+.ldr-mark{width:60px;height:60px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dim) 100%);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 8px 32px rgba(200,160,32,0.4);position:relative;z-index:1;animation:ldrmark 2.5s ease infinite;}
+.ldr-mark span{font-family:'Playfair Display',serif;font-weight:700;font-size:28px;color:var(--navy);}
+.ldr-logo{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.8rem);color:var(--gold);letter-spacing:14px;margin-bottom:6px;font-weight:500;position:relative;z-index:1;}
+.ldr-logo em{font-style:italic;color:var(--blue-ice);font-weight:400;}
+.ldr-sub{font-variant:small-caps;letter-spacing:5px;font-size:0.62rem;color:var(--gold-dim);margin-bottom:32px;position:relative;z-index:1;font-weight:600;}
+.ldr-bar{width:240px;height:1px;background:var(--border-lt);position:relative;overflow:hidden;z-index:1;}
+.ldr-fill{position:absolute;height:100%;width:0%;background:linear-gradient(90deg,transparent,var(--gold-dim) 20%,var(--gold) 50%,var(--gold-dim) 80%,transparent);animation:ldrfill 3s forwards ease-in-out;}
+.ldr-cap{margin-top:24px;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--grey);font-style:italic;opacity:0.6;position:relative;z-index:1;}
+@keyframes ldrfill{to{width:100%;}}
+@keyframes ldrmark{0%,100%{transform:scale(1);box-shadow:0 8px 32px rgba(200,160,32,0.4);}50%{transform:scale(1.05);box-shadow:0 12px 48px rgba(200,160,32,0.6);}}
+
+/* HEADER */
+.header{background:linear-gradient(180deg,var(--navy-mid) 0%,var(--bg-card) 100%);border-bottom:1px solid var(--border-gold);position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:18px 28px 12px;}
+.header-brand{display:flex;align-items:center;gap:14px;}
+.logo-mark{width:42px;height:42px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dim) 100%);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 20px rgba(200,160,32,0.35);}
+.logo-mark span{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:var(--navy);}
+.brand-text p:first-child{color:var(--gold);font-size:9px;letter-spacing:4px;text-transform:uppercase;font-weight:600;margin-bottom:3px;}
+.brand-text h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(14px,3vw,19px);font-weight:500;color:var(--white);letter-spacing:0.02em;}
+.brand-text h1 em{font-style:italic;color:var(--blue-ice);}
+.brand-text .tagline{font-size:11px;color:var(--blue-ice);margin-top:5px;font-style:italic;}
+.scenarios{display:flex;gap:8px;flex-shrink:0;align-items:center;flex-wrap:wrap;}
+.scen-btn{padding:7px 18px;font-size:9px;letter-spacing:3px;text-transform:uppercase;font-family:'Cormorant Garamond',serif;font-weight:600;cursor:pointer;border-radius:2px;transition:all 0.25s;}
+.scen-btn.bear{background:transparent;color:var(--red);border:1px solid var(--red);}
+.scen-btn.bear.active{background:var(--red);color:var(--white);box-shadow:0 0 16px rgba(184,50,50,0.4);}
+.scen-btn.base{background:transparent;color:var(--gold);border:1px solid var(--gold);}
+.scen-btn.base.active{background:var(--gold);color:var(--navy);box-shadow:0 0 16px var(--gold-glow);}
+.scen-btn.bull{background:transparent;color:var(--green-lt);border:1px solid var(--green-lt);}
+.scen-btn.bull.active{background:var(--green-lt);color:var(--navy);box-shadow:0 0 16px var(--green-glow);}
+.stress-btn{padding:7px 14px;font-size:9px;letter-spacing:3px;text-transform:uppercase;font-family:'Cormorant Garamond',serif;font-weight:700;cursor:pointer;border-radius:2px;background:transparent;color:var(--red-lt);border:1px solid var(--red-lt);transition:all 0.2s;flex-shrink:0;margin-left:8px;}
+.stress-btn:hover{background:var(--red);color:var(--white);box-shadow:0 0 20px rgba(184,50,50,0.4);}
+
+.op-bar{padding:9px 28px;background:var(--bg-alt);border-top:1px solid var(--border);font-size:9px;letter-spacing:3px;color:var(--blue-ice);font-variant:small-caps;font-weight:600;display:flex;align-items:center;gap:12px;}
+.op-pulse{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:opulse 2s infinite;}
+@keyframes opulse{0%,100%{opacity:0.4;box-shadow:0 0 0 0 var(--gold-glow);}50%{opacity:1;box-shadow:0 0 0 6px transparent;}}
+
+.gold-rule{height:1px;background:linear-gradient(90deg,transparent 0%,var(--gold-dim) 20%,var(--gold) 50%,var(--gold-dim) 80%,transparent 100%);}
+
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 28px;-webkit-overflow-scrolling:touch;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{padding:13px 14px;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;font-family:'Cormorant Garamond',serif;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--grey);border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:all 0.25s;}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-btn:hover:not(.active){color:var(--blue-ice);}
+
+/* CONTENT */
+.content{padding:22px 28px;position:relative;z-index:1;}
+.tab-panel{display:none;animation:fadein 0.5s ease;}
+.tab-panel.active{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INSIGHT */
+.insight-stripe{background:linear-gradient(90deg,transparent,var(--bg-alt) 15%,var(--bg-alt) 85%,transparent);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:11px 28px;display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.insight-label{font-variant:small-caps;letter-spacing:3px;font-size:0.6rem;color:var(--gold);white-space:nowrap;flex-shrink:0;font-weight:700;}
+.insight-text{font-style:italic;font-size:13px;color:var(--blue-ice);line-height:1.45;}
+
+/* SLIDER PANEL */
+.slider-panel{display:flex;gap:22px;flex-wrap:wrap;background:var(--bg-alt);border:1px solid var(--border-lt);border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin-bottom:18px;align-items:flex-end;}
+.slider-item{flex:1;min-width:150px;}
+.slider-item label{font-variant:small-caps;letter-spacing:0.12em;font-size:0.65rem;color:var(--grey);display:block;margin-bottom:6px;font-weight:600;}
+.slider-item .sh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.slider-item .sv{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--gold);}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:3px;background:var(--border-lt);border-radius:2px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 8px rgba(200,160,32,0.5);transition:all 0.2s;}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;}
+.slider-reset{padding:8px 18px;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-family:'Cormorant Garamond',serif;font-weight:600;background:transparent;color:var(--grey);border:1px solid var(--border-lt);border-radius:2px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.slider-reset:hover{color:var(--gold);border-color:var(--gold-dim);}
+
+/* CARDS */
+.card{background:var(--bg-card);border:1px solid var(--border-lt);border-radius:4px;padding:22px;margin-bottom:18px;backdrop-filter:blur(8px);}
+.card-gold{border-left:2px solid var(--gold);}
+.card-blue{border-left:2px solid var(--blue);}
+.card-green{border-left:2px solid var(--green-lt);}
+.card-red{border-left:2px solid var(--red);}
+
+/* GRIDS */
+.metric-grid,.chart-grid{display:grid;gap:14px;margin-bottom:18px;}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.g5{grid-template-columns:repeat(5,minmax(0,1fr));}
+.chart-grid.c2{grid-template-columns:repeat(2,minmax(0,1fr));}
+@media(max-width:900px){.g5{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:640px){.g4,.g5{grid-template-columns:repeat(2,minmax(0,1fr));}.g3{grid-template-columns:repeat(2,minmax(0,1fr));}.chart-grid.c2{grid-template-columns:1fr;}}
+@media(max-width:400px){.g2,.g3,.g4,.g5{grid-template-columns:1fr;}}
+
+/* METRIC BOX */
+.mb{background:var(--bg-alt);border:1px solid var(--border-lt);border-radius:3px;padding:16px 14px;border-left:2px solid var(--gold-dim);position:relative;overflow:hidden;}
+.mb .ml{font-variant:small-caps;letter-spacing:0.12em;font-size:0.6rem;color:var(--grey);font-weight:600;margin-bottom:7px;display:block;}
+.mb .mv{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(18px,4vw,26px);font-weight:400;line-height:1;margin-bottom:4px;}
+.mb .ms{font-size:0.7rem;color:var(--grey);font-style:italic;line-height:1.3;}
+.mb.gold .mv{color:var(--gold);}
+.mb.blue .mv{color:var(--blue-lt);}.mb.blue{border-left-color:var(--blue);}
+.mb.green .mv{color:var(--green-lt);}.mb.green{border-left-color:var(--green-lt);}
+.mb.red .mv{color:var(--red-lt);}.mb.red{border-left-color:var(--red);}
+.mb .pill{position:absolute;top:8px;right:8px;font-size:7px;letter-spacing:1.5px;padding:2px 6px;border-radius:2px;text-transform:uppercase;font-weight:700;}
+.pill-proven{background:rgba(46,125,82,0.2);color:var(--green-lt);border:1px solid var(--green-lt);}
+.pill-assumed{background:rgba(200,160,32,0.15);color:var(--gold);border:1px solid var(--gold-dim);}
+
+/* SECTION LABEL */
+.sec-label{font-variant:small-caps;letter-spacing:0.18em;font-size:0.65rem;color:var(--grey);font-weight:600;margin-bottom:14px;display:block;border-bottom:1px solid var(--border);padding-bottom:8px;}
+
+/* CHART */
+.chart-wrap{position:relative;width:100%;}
+
+/* TABLE */
+.dt{width:100%;border-collapse:collapse;font-size:clamp(11px,2.4vw,13px);}
+.dt th{font-variant:small-caps;letter-spacing:0.12em;font-size:0.6rem;color:var(--grey);font-weight:600;padding:9px 12px;text-align:left;border-bottom:1px solid var(--gold-dim);white-space:nowrap;}
+.dt th.r{text-align:right;}
+.dt td{padding:8px 12px;border-bottom:1px solid rgba(14,30,54,0.5);color:var(--grey);}
+.dt td.r{text-align:right;font-family:'Courier Prime',monospace;}
+.dt td.val{color:var(--white);font-family:'Courier Prime',monospace;}
+.dt td.gold{color:var(--gold);font-family:'Courier Prime',monospace;font-weight:700;}
+.dt td.green{color:var(--green-lt);font-family:'Courier Prime',monospace;}
+.dt td.red{color:var(--red-lt);font-family:'Courier Prime',monospace;}
+.dt td.blue{color:var(--blue-lt);font-family:'Courier Prime',monospace;}
+.dt tr.sec td{padding:14px 12px 4px;font-variant:small-caps;letter-spacing:0.15em;font-size:0.6rem;color:var(--grey-dk);font-weight:700;border-bottom:none;font-family:'Cormorant Garamond',serif;}
+.dt tr.hl{background:rgba(200,160,32,0.04);}
+.dt tr.hl td{border-bottom:1px solid rgba(200,160,32,0.15);}
+.tbs{overflow-x:auto;}
+.tbs::-webkit-scrollbar{height:3px;}
+.tbs::-webkit-scrollbar-thumb{background:var(--gold-dim);}
+
+/* PROGRESS BARS */
+.pr{margin-bottom:13px;}
+.pr .ph{display:flex;justify-content:space-between;margin-bottom:5px;}
+.pr .pl{font-size:0.75rem;color:var(--grey);font-style:italic;}
+.pr .pv{font-family:'Courier Prime',monospace;font-size:0.75rem;color:var(--white);}
+.pb{background:var(--border-lt);border-radius:1px;height:4px;}
+.pf{height:4px;border-radius:1px;transition:width 0.6s ease;}
+
+/* HEAT */
+.ht{width:100%;border-collapse:collapse;font-size:12px;}
+.ht th{padding:8px 12px;font-variant:small-caps;letter-spacing:0.1em;font-size:0.6rem;color:var(--grey);font-weight:600;border-bottom:1px solid var(--gold-dim);}
+.ht td{padding:10px 12px;text-align:center;font-family:'Courier Prime',monospace;font-size:12px;border-bottom:1px solid rgba(14,30,54,0.4);}
+.ht td.rl{text-align:left;color:var(--gold);font-weight:700;}
+
+/* COMP */
+.comp{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);gap:10px;}
+.comp:last-child{border-bottom:none;}
+.comp.hi{background:rgba(200,160,32,0.04);padding:11px 10px;border-radius:3px;margin:0 -10px;}
+.comp .cn{font-family:'Playfair Display',serif;font-weight:500;font-size:14px;color:var(--white);}
+.comp .cs{font-size:11px;color:var(--grey);font-style:italic;}
+.comp .cm{display:flex;gap:18px;flex-shrink:0;}
+.comp .cmx{text-align:right;}
+.comp .cmx .cl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-dk);display:block;}
+.comp .cmx .cv{font-family:'Courier Prime',monospace;color:var(--gold);font-size:13px;}
+
+/* MOIC */
+.moic{background:var(--bg);border:1px solid var(--border-lt);border-radius:3px;padding:16px;margin-bottom:12px;}
+.moic p.ml2{font-style:italic;color:var(--grey);font-size:12px;margin-bottom:10px;}
+.moic .mr{display:flex;justify-content:space-between;}
+.moic .ms2 .ml3{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-dk);display:block;margin-bottom:3px;}
+.moic .ms2 .mv2{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;}
+
+/* MILESTONE */
+.mile{display:grid;grid-template-columns:1fr 80px 80px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
+@media(max-width:640px){.mile{grid-template-columns:1fr 1fr;gap:6px;}}
+.mile .mn{font-family:'Playfair Display',serif;font-style:italic;color:var(--white);font-size:13px;}
+.mile .mt{font-family:'Courier Prime',monospace;font-size:11px;color:var(--blue-lt);}
+.mile .mc{font-family:'Courier Prime',monospace;font-size:11px;color:var(--red-lt);}
+.mile .mo{font-size:12px;color:var(--grey);font-style:italic;}
+.mile .mk{font-family:'Courier Prime',monospace;font-size:11px;color:var(--gold);text-align:right;}
+
+/* FUNNEL */
+.fr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+.fr .fl{font-size:12px;color:var(--grey);font-style:italic;}
+.fr .fr2{text-align:right;}
+.fr .fv{font-family:'Courier Prime',monospace;font-size:14px;color:var(--white);}
+.fr .fp{font-size:10px;color:var(--grey-dk);}
+
+/* SEG */
+.seg{background:var(--bg-alt);border:1px solid var(--border-lt);border-radius:4px;padding:18px;}
+.seg h3{font-family:'Playfair Display',serif;font-weight:600;font-size:14px;color:var(--gold);letter-spacing:0.05em;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--gold-dim);}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.sm{background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:10px;}
+.sm .sl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-dk);display:block;margin-bottom:4px;}
+.sm .sv2{font-family:'Courier Prime',monospace;font-size:15px;}
+
+/* RISK ROWS */
+.risk{background:var(--bg-card);border:1px solid var(--border-lt);border-left:3px solid var(--red);border-radius:3px;padding:14px 16px;margin-bottom:10px;}
+.risk.medium{border-left-color:var(--gold);}
+.risk.low{border-left-color:var(--green-lt);}
+.risk h4{font-family:'Playfair Display',serif;font-style:italic;color:var(--white);font-size:14px;margin-bottom:6px;}
+.risk .rmeta{display:flex;gap:14px;margin-bottom:8px;font-size:10px;color:var(--grey);}
+.risk .rmeta span strong{color:var(--gold);}
+.risk .rmit{font-size:12px;color:var(--blue-ice);font-style:italic;line-height:1.5;}
+
+/* CAP TABLE */
+.cap-row{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:12px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);}
+.cap-row.hdr{font-variant:small-caps;letter-spacing:2px;font-size:0.6rem;color:var(--grey);font-weight:700;border-bottom:1px solid var(--gold-dim);}
+.cap-row .cn2{font-family:'Playfair Display',serif;color:var(--white);font-style:italic;}
+.cap-row .cv2{font-family:'Courier Prime',monospace;font-size:13px;}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border-lt);padding:18px 28px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:20px;background:var(--bg-deep);}
+.footer p{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-dk);}
+.footer em{font-style:italic;font-size:12px;color:var(--gold-dim);font-family:'Playfair Display',serif;letter-spacing:0.05em;}
+.footer .quote{font-style:italic;color:var(--blue-ice);font-size:11px;font-family:'Playfair Display',serif;}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="ldr-mark"><span>E</span></div>
+  <div class="ldr-logo">EMPIRE <em>OS</em></div>
+  <div class="ldr-sub">British AI Consulting</div>
+  <div class="ldr-bar"><div class="ldr-fill"></div></div>
+  <div class="ldr-cap">Calculating Sovereign Trajectories…</div>
+</div>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-brand">
+      <div class="logo-mark"><span>E</span></div>
+      <div class="brand-text">
+        <p>British AI Consulting · Empire OS</p>
+        <h1>Sovereign Financial Engine · <em>Series Seed</em></h1>
+        <p class="tagline">Every figure derived from a live operating model — not static projections.</p>
+      </div>
+    </div>
+    <div class="scenarios">
+      <button class="scen-btn bear" onclick="setScenario('bear')">Bear</button>
+      <button class="scen-btn base active" onclick="setScenario('base')">Base</button>
+      <button class="scen-btn bull" onclick="setScenario('bull')">Bull</button>
+      <button class="stress-btn" onclick="triggerStress()">Stress Test</button>
+    </div>
+  </div>
+  <div class="op-bar">
+    <span class="op-pulse"></span>
+    Operator Mode &mdash; Assumption-driven · Revenue layers · GTM mechanics computed live
+  </div>
+  <div class="gold-rule"></div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="summary">Executive Summary</button>
+    <button class="tab-btn" data-tab="gtm">GTM Engine</button>
+    <button class="tab-btn" data-tab="pl">P&amp;L Statement</button>
+    <button class="tab-btn" data-tab="unit">Unit Economics</button>
+    <button class="tab-btn" data-tab="mrr">MRR Waterfall</button>
+    <button class="tab-btn" data-tab="metrics">SaaS Metrics</button>
+    <button class="tab-btn" data-tab="market">Market Sizing</button>
+    <button class="tab-btn" data-tab="runway">Runway &amp; Burn</button>
+    <button class="tab-btn" data-tab="sensitivity">Sensitivity</button>
+    <button class="tab-btn" data-tab="valuation">Valuation</button>
+    <button class="tab-btn" data-tab="captable">Cap Table</button>
+    <button class="tab-btn" data-tab="risk">Risk Register</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="slider-panel">
+    <div class="slider-item">
+      <div class="sh"><label>Growth Multiplier</label><span class="sv" id="growthVal">3.0×</span></div>
+      <input type="range" min="1.2" max="5" step="0.1" value="3" oninput="updateGrowth(this.value)">
+    </div>
+    <div class="slider-item">
+      <div class="sh"><label>Churn Multiplier</label><span class="sv" id="churnVal">1.0×</span></div>
+      <input type="range" min="0.5" max="3" step="0.05" value="1" oninput="updateChurn(this.value)">
+    </div>
+    <div class="slider-item">
+      <div class="sh"><label>ARPU Multiplier</label><span class="sv" id="arpuVal">1.0×</span></div>
+      <input type="range" min="0.5" max="2.0" step="0.05" value="1" oninput="updateARPU(this.value)">
+    </div>
+    <div class="slider-item">
+      <div class="sh"><label>GMV Fee %</label><span class="sv" id="gmvVal">0.50%</span></div>
+      <input type="range" min="0.1" max="2.0" step="0.05" value="0.5" oninput="updateGMV(this.value)">
+    </div>
+    <button class="slider-reset" onclick="resetSliders()">Reset</button>
+  </div>
+
+  <div class="insight-stripe">
+    <span class="insight-label">Live Insight</span>
+    <span class="insight-text" id="insight-text">SaaS subscription + transactional GMV layers create a compounding valuation floor unavailable to single-revenue-stream competitors.</span>
+  </div>
+
+  <!-- ═══════════════════ EXECUTIVE SUMMARY ═══════════════════ -->
+  <div id="tab-summary" class="tab-panel active">
+    <div class="metric-grid g4">
+      <div class="mb gold"><span class="pill pill-assumed">Modelled</span><span class="ml">Year 1 ARR</span><div class="mv" id="s-y1arr"></div><div class="ms" id="s-y1cos"></div></div>
+      <div class="mb gold"><span class="pill pill-assumed">Modelled</span><span class="ml">Year 3 ARR</span><div class="mv" id="s-y3arr"></div><div class="ms" id="s-y3cos"></div></div>
+      <div class="mb blue"><span class="pill pill-assumed">Modelled</span><span class="ml">Year 1 GMV</span><div class="mv" id="s-y1gmv"></div><div class="ms">Payment vol. through platform</div></div>
+      <div class="mb blue"><span class="pill pill-assumed">Modelled</span><span class="ml">Year 3 GMV</span><div class="mv" id="s-y3gmv"></div><div class="ms">Stripe-model TPV</div></div>
+    </div>
+    <div class="metric-grid g4">
+      <div class="mb red"><span class="pill pill-proven">Proven</span><span class="ml">Blended Churn</span><div class="mv" id="s-churn"></div><div class="ms">Monthly weighted by mix</div></div>
+      <div class="mb green"><span class="pill pill-proven">Proven</span><span class="ml">Gross Margin</span><div class="mv">76.0%</div><div class="ms">SaaS benchmark 70–80%</div></div>
+      <div class="mb" id="s-nrr-box"><span class="pill pill-assumed">Modelled</span><span class="ml">NRR Year 1</span><div class="mv" id="s-nrr"></div><div class="ms" id="s-nrr-sub"></div></div>
+      <div class="mb blue"><span class="pill pill-proven">Proven</span><span class="ml">Runway (Zero Rev)</span><div class="mv" id="s-runway"></div><div class="ms">At zero-revenue baseline</div></div>
+    </div>
+    <div class="card card-gold">
+      <span class="sec-label">Total Revenue Trajectory — All Streams</span>
+      <div class="chart-wrap"><canvas id="chart-revenue" height="220"></canvas></div>
+    </div>
+    <div class="card">
+      <span class="sec-label">3-Year Financial Summary</span>
+      <div class="tbs">
+        <table class="dt"><thead><tr>
+          <th>Metric</th><th class="r">Year 1</th><th class="r">Year 2</th><th class="r">Year 3</th><th class="r">3Y CAGR</th>
+        </tr></thead><tbody id="summary-table"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ GTM ENGINE ═══════════════════ -->
+  <div id="tab-gtm" class="tab-panel">
+    <p class="sec-label" style="border:none;">Sales Activity → Customer Acquisition · The bottom-up GTM mechanics that produce the Year 1 company count.</p>
+
+    <div class="slider-panel" style="border-left-color:var(--blue);">
+      <div class="slider-item">
+        <div class="sh"><label>Sales Reps</label><span class="sv" id="repsVal">5</span></div>
+        <input type="range" min="1" max="20" value="5" oninput="updateReps(this.value)">
+      </div>
+      <div class="slider-item">
+        <div class="sh"><label>Leads / Rep / Mo</label><span class="sv" id="leadsVal">40</span></div>
+        <input type="range" min="10" max="120" value="40" oninput="updateLeads(this.value)">
+      </div>
+      <div class="slider-item">
+        <div class="sh"><label>Win Rate</label><span class="sv" id="winVal">15%</span></div>
+        <input type="range" min="2" max="40" value="15" oninput="updateWin(this.value)">
+      </div>
+      <div class="slider-item">
+        <div class="sh"><label>Inbound Leads / Mo</label><span class="sv" id="inbVal">200</span></div>
+        <input type="range" min="0" max="2000" step="25" value="200" oninput="updateInbound(this.value)">
+      </div>
+    </div>
+
+    <div class="metric-grid g4">
+      <div class="mb gold"><span class="ml">Outbound Customers / Mo</span><div class="mv" id="gtm-outbound"></div><div class="ms">Reps × Leads × Win Rate</div></div>
+      <div class="mb blue"><span class="ml">Inbound Customers / Mo</span><div class="mv" id="gtm-inbound"></div><div class="ms">Inbound Leads × 8% conv.</div></div>
+      <div class="mb green"><span class="ml">Total New / Mo</span><div class="mv" id="gtm-total"></div><div class="ms">Combined channel velocity</div></div>
+      <div class="mb gold"><span class="ml">Year 1 Customers (GTM)</span><div class="mv" id="gtm-y1"></div><div class="ms" id="gtm-y1-status"></div></div>
+    </div>
+
+    <div class="metric-grid g4">
+      <div class="mb red"><span class="ml">Blended CAC</span><div class="mv" id="gtm-cac"></div><div class="ms">Cost per acquired customer</div></div>
+      <div class="mb green"><span class="ml">CAC Payback</span><div class="mv" id="gtm-payback"></div><div class="ms">Months at gross margin</div></div>
+      <div class="mb blue"><span class="ml">S&amp;M Burn / Mo</span><div class="mv" id="gtm-sm"></div><div class="ms">Rep cost + program spend</div></div>
+      <div class="mb gold"><span class="ml">Magic Number</span><div class="mv" id="gtm-magic"></div><div class="ms">Sales efficiency · &gt;0.75 elite</div></div>
+    </div>
+
+    <div class="chart-grid c2">
+      <div class="card card-blue"><span class="sec-label">Channel Mix — Outbound vs Inbound</span><div class="chart-wrap"><canvas id="chart-channels" height="220"></canvas></div></div>
+      <div class="card card-gold"><span class="sec-label">Customer Acquisition Trajectory</span><div class="chart-wrap"><canvas id="chart-acquisition" height="220"></canvas></div></div>
+    </div>
+
+    <div class="card">
+      <span class="sec-label">GTM Funnel Mathematics</span>
+      <div class="tbs"><table class="dt"><thead><tr>
+        <th>Stage</th><th class="r">Volume / Mo</th><th class="r">Conv %</th><th class="r">Output / Mo</th><th class="r">Annual</th>
+      </tr></thead><tbody id="gtm-funnel-table"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ P&L ═══════════════════ -->
+  <div id="tab-pl" class="tab-panel">
+    <div class="card">
+      <span class="sec-label">Detailed Profit &amp; Loss Statement (£ GBP)</span>
+      <div class="tbs"><table class="dt"><thead><tr>
+        <th>Line Item</th>
+        <th class="r">Year 1</th><th class="r">% Rev</th>
+        <th class="r">Year 2</th><th class="r">% Rev</th>
+        <th class="r">Year 3</th><th class="r">% Rev</th>
+      </tr></thead><tbody id="pl-table"></tbody></table></div>
+    </div>
+    <div class="chart-grid c2">
+      <div class="card"><span class="sec-label">Revenue Mix Evolution</span><div class="chart-wrap"><canvas id="chart-mix" height="220"></canvas></div></div>
+      <div class="card"><span class="sec-label">EBITDA Bridge</span><div class="chart-wrap"><canvas id="chart-ebitda" height="220"></canvas></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ UNIT ═══════════════════ -->
+  <div id="tab-unit" class="tab-panel">
+    <div class="metric-grid g3" id="unit-segs"></div>
+    <div class="chart-grid c2">
+      <div class="card"><span class="sec-label">LTV vs CAC by Segment</span><div class="chart-wrap"><canvas id="chart-ltvcac" height="220"></canvas></div></div>
+      <div class="card"><span class="sec-label">24-Month Cohort Revenue Retention</span><div class="chart-wrap"><canvas id="chart-cohort" height="220"></canvas></div></div>
+    </div>
+    <div class="card">
+      <span class="sec-label">CAC Payback Period by Segment</span>
+      <div class="chart-wrap"><canvas id="chart-payback" height="180"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ MRR ═══════════════════ -->
+  <div id="tab-mrr" class="tab-panel">
+    <div class="metric-grid g4">
+      <div class="mb gold"><span class="ml">Ending MRR Y1</span><div class="mv" id="mrr-y1"></div><div class="ms">End of Q4</div></div>
+      <div class="mb gold"><span class="ml">Ending MRR Y2</span><div class="mv" id="mrr-y2"></div><div class="ms">End of Q4</div></div>
+      <div class="mb gold"><span class="ml">Ending MRR Y3</span><div class="mv" id="mrr-y3"></div><div class="ms">End of Q4</div></div>
+      <div class="mb green"><span class="ml">Peak Net New MRR</span><div class="mv" id="mrr-peak"></div><div class="ms">Single quarter</div></div>
+    </div>
+    <div class="card card-blue"><span class="sec-label">Quarterly MRR Waterfall — New / Expansion / Churned</span><div class="chart-wrap"><canvas id="chart-waterfall" height="240"></canvas></div></div>
+    <div class="card"><span class="sec-label">Ending MRR Trajectory</span><div class="chart-wrap"><canvas id="chart-mrrline" height="180"></canvas></div></div>
+    <div class="card">
+      <span class="sec-label">Quarterly MRR Detail</span>
+      <div class="tbs"><table class="dt"><thead><tr>
+        <th>Quarter</th><th class="r">Companies</th><th class="r">New MRR</th><th class="r">Expansion</th><th class="r">Churned</th><th class="r">Net New</th><th class="r">Ending MRR</th>
+      </tr></thead><tbody id="mrr-table"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SAAS METRICS ═══════════════════ -->
+  <div id="tab-metrics" class="tab-panel">
+    <p class="sec-label" style="border:none;">Institutional-grade SaaS performance indicators benchmarked against top-quartile industry standards.</p>
+
+    <div class="metric-grid g4">
+      <div class="mb gold"><span class="ml">Rule of 40</span><div class="mv" id="m-r40"></div><div class="ms" id="m-r40-status">Growth % + EBITDA % · &gt;40 elite</div></div>
+      <div class="mb blue"><span class="ml">Burn Multiple</span><div class="mv" id="m-burn-mult"></div><div class="ms" id="m-burn-status">Net Burn / Net New ARR · &lt;1 elite</div></div>
+      <div class="mb green"><span class="ml">Magic Number</span><div class="mv" id="m-magic"></div><div class="ms" id="m-magic-status">Net New ARR / S&amp;M · &gt;0.75 elite</div></div>
+      <div class="mb gold"><span class="ml">Quick Ratio</span><div class="mv" id="m-quick"></div><div class="ms" id="m-quick-status">(New+Exp)/(Churn+Contraction) · &gt;4 elite</div></div>
+    </div>
+
+    <div class="metric-grid g4">
+      <div class="mb"><span class="ml">CAC Recovery</span><div class="mv" id="m-cac-rec"></div><div class="ms">Avg payback period</div></div>
+      <div class="mb"><span class="ml">LTV : CAC Blended</span><div class="mv" id="m-ltv-cac"></div><div class="ms">Weighted by segment mix</div></div>
+      <div class="mb"><span class="ml">Net Dollar Retention</span><div class="mv" id="m-ndr"></div><div class="ms">Includes expansion offset</div></div>
+      <div class="mb"><span class="ml">Gross Dollar Retention</span><div class="mv" id="m-gdr"></div><div class="ms">Pure churn-only metric</div></div>
+    </div>
+
+    <div class="card">
+      <span class="sec-label">SaaS Performance Benchmarks vs Empire OS</span>
+      <div class="tbs"><table class="dt"><thead><tr>
+        <th>Metric</th><th class="r">Below Avg</th><th class="r">Average</th><th class="r">Top Quartile</th><th class="r">Elite</th><th class="r">Empire OS</th>
+      </tr></thead><tbody id="bench-table"></tbody></table></div>
+    </div>
+
+    <div class="chart-grid c2">
+      <div class="card"><span class="sec-label">Rule of 40 Trajectory</span><div class="chart-wrap"><canvas id="chart-r40" height="220"></canvas></div></div>
+      <div class="card"><span class="sec-label">Burn Multiple Evolution</span><div class="chart-wrap"><canvas id="chart-burn" height="220"></canvas></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ MARKET ═══════════════════ -->
+  <div id="tab-market" class="tab-panel">
+    <div class="metric-grid g3">
+      <div class="mb gold"><span class="ml">TAM — Global</span><div class="mv">£380B</div><div class="ms">SME software &amp; gov data combined</div></div>
+      <div class="mb blue"><span class="ml">SAM — UK &amp; Europe</span><div class="mv">£42B</div><div class="ms">Addressable with current architecture</div></div>
+      <div class="mb green"><span class="ml">SOM — Year 3</span><div class="mv" id="mkt-som"></div><div class="ms" id="mkt-som-sub"></div></div>
+    </div>
+    <div class="chart-grid c2">
+      <div class="card"><span class="sec-label">Revenue vs SAM Capture Milestones</span><div class="chart-wrap"><canvas id="chart-market" height="240"></canvas></div></div>
+      <div class="card">
+        <span class="sec-label">UK Addressable Funnel</span>
+        <div id="funnel-rows"></div>
+        <div style="height:16px;"></div>
+        <span class="sec-label">Government Data Licensing</span>
+        <div id="gov-rows"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ RUNWAY ═══════════════════ -->
+  <div id="tab-runway" class="tab-panel">
+    <div class="metric-grid g4">
+      <div class="mb gold"><span class="ml">Total Raise</span><div class="mv">£5.0M</div><div class="ms">Series Seed · 2026</div></div>
+      <div class="mb red"><span class="ml">Monthly Burn (Y1)</span><div class="mv" id="rwy-burn"></div><div class="ms">Pre-revenue baseline</div></div>
+      <div class="mb blue"><span class="ml">Runway (Zero Rev)</span><div class="mv" id="rwy-months"></div><div class="ms">Without revenue</div></div>
+      <div class="mb green"><span class="ml">Break-Even MRR</span><div class="mv" id="rwy-bkmrr"></div><div class="ms">Revenue required</div></div>
+    </div>
+    <div class="chart-grid c2">
+      <div class="card card-gold">
+        <span class="sec-label">£5M Funding Allocation</span>
+        <div id="prog-bars"></div>
+      </div>
+      <div class="card"><span class="sec-label">Cumulative Cash Position (24 mo)</span><div class="chart-wrap"><canvas id="chart-cash" height="240"></canvas></div></div>
+    </div>
+    <div class="card">
+      <span class="sec-label">Funding Milestone Map</span>
+      <div id="milestone-rows"></div>
+    </div>
+    <div class="card">
+      <span class="sec-label">Path to Profitability</span>
+      <div class="chart-wrap"><canvas id="chart-pathprofit" height="220"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SENSITIVITY ═══════════════════ -->
+  <div id="tab-sensitivity" class="tab-panel">
+    <div class="card">
+      <span class="sec-label">Year 3 ARR Sensitivity Matrix (£M) — Annual Growth × Monthly Churn</span>
+      <p style="font-size:11px;color:var(--grey);font-style:italic;margin-bottom:18px;">Heatmap intensity reflects relative ARR magnitude across the parameter space.</p>
+      <div class="tbs"><table class="ht" id="sensitivity-table"></table></div>
+    </div>
+    <div class="chart-grid c2">
+      <div class="card"><span class="sec-label">ARPU Sensitivity on Year 3 ARR</span><div class="chart-wrap"><canvas id="chart-arpu-sens" height="220"></canvas></div></div>
+      <div class="card"><span class="sec-label">Break-Even Companies by ARPU</span><div class="chart-wrap"><canvas id="chart-bk-sens" height="220"></canvas></div></div>
+    </div>
+    <div class="card">
+      <span class="sec-label">Tornado Analysis — Variable Impact on Year 3 ARR</span>
+      <div class="chart-wrap"><canvas id="chart-tornado" height="240"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ VALUATION ═══════════════════ -->
+  <div id="tab-valuation" class="tab-panel">
+    <div class="metric-grid g4">
+      <div class="mb gold"><span class="ml">Post-Money</span><div class="mv">£20–25M</div><div class="ms">20–25% dilution</div></div>
+      <div class="mb gold"><span class="ml">Implied ARR Multiple</span><div class="mv" id="val-mult"></div><div class="ms">On Y1 ARR</div></div>
+      <div class="mb green"><span class="ml">Y3 Exit (5×)</span><div class="mv" id="val-5x"></div><div class="ms">Conservative SaaS</div></div>
+      <div class="mb blue"><span class="ml">Y3 Exit (10×)</span><div class="mv" id="val-10x"></div><div class="ms">Growth SaaS</div></div>
+    </div>
+    <div class="card card-blue">
+      <span class="sec-label">Valuation Range by ARR Multiple — Year 3 · All Scenarios</span>
+      <div class="chart-wrap"><canvas id="chart-val" height="240"></canvas></div>
+    </div>
+    <div class="chart-grid c2">
+      <div class="card"><span class="sec-label">SaaS Comparable Valuations at Seed</span><div id="comp-rows"></div></div>
+      <div class="card"><span class="sec-label">Investor Return Scenarios (£5M · 20% Stake)</span><div id="moic-cards"></div></div>
+    </div>
+    <div class="card">
+      <span class="sec-label">Recent Comparable Exits — UK / EU SaaS &amp; Fintech</span>
+      <div id="exits-rows"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ CAP TABLE ═══════════════════ -->
+  <div id="tab-captable" class="tab-panel">
+    <div class="metric-grid g4">
+      <div class="mb gold"><span class="ml">Pre-Money</span><div class="mv">£15.0M</div><div class="ms">Pre-investment value</div></div>
+      <div class="mb gold"><span class="ml">Post-Money</span><div class="mv">£20.0M</div><div class="ms">After £5M seed</div></div>
+      <div class="mb blue"><span class="ml">Investor Stake</span><div class="mv">25%</div><div class="ms">Series Seed</div></div>
+      <div class="mb green"><span class="ml">Founder Retained</span><div class="mv">75%</div><div class="ms">Pre-Series A</div></div>
+    </div>
+
+    <div class="card">
+      <span class="sec-label">Cap Table — Post Series Seed</span>
+      <div class="cap-row hdr">
+        <div>Holder</div><div class="r" style="text-align:right;">Investment</div><div class="r" style="text-align:right;">% Ownership</div><div class="r" style="text-align:right;">Shares (assumed)</div>
+      </div>
+      <div id="captable-rows"></div>
+    </div>
+
+    <div class="card">
+      <span class="sec-label">Dilution Waterfall — Through Series B</span>
+      <div class="chart-wrap"><canvas id="chart-dilution" height="240"></canvas></div>
+    </div>
+
+    <div class="card">
+      <span class="sec-label">Founder Equity Value at Different Exits</span>
+      <div class="tbs"><table class="dt"><thead><tr>
+        <th>Exit Value</th><th class="r">Pre-Money Year</th><th class="r">Founder %</th><th class="r">Founder Proceeds</th><th class="r">Investor Return (Seed)</th>
+      </tr></thead><tbody id="exit-table"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ RISK ═══════════════════ -->
+  <div id="tab-risk" class="tab-panel">
+    <p class="sec-label" style="border:none;">Top operational, market, and execution risks with quantified impact and active mitigation strategies.</p>
+    <div id="risk-list"></div>
+
+    <div class="card">
+      <span class="sec-label">Risk Heatmap — Likelihood × Impact</span>
+      <div class="chart-wrap"><canvas id="chart-risk" height="240"></canvas></div>
+    </div>
+
+    <div class="card card-gold">
+      <span class="sec-label">Concentration Risk Metrics</span>
+      <div class="metric-grid g3" style="margin-bottom:0;">
+        <div class="mb"><span class="ml">Single-Customer Concentration</span><div class="mv" style="color:var(--green-lt);">&lt;3%</div><div class="ms">No customer over 3% of revenue</div></div>
+        <div class="mb"><span class="ml">Top-10 Customer Share</span><div class="mv" style="color:var(--gold);">~12%</div><div class="ms">Highly distributed base</div></div>
+        <div class="mb"><span class="ml">Revenue Stream Diversity</span><div class="mv" style="color:var(--blue-lt);">4 streams</div><div class="ms">Sub + Setup + Txn + Gov</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>British AI Consulting · Empire OS · Sovereign Financial Engine · Confidential 2026</p>
+  <em class="quote">To be good is the only way.</em>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════════
+// CORE ASSUMPTIONS
+// ═══════════════════════════════════════════════════════════════════════════════
+const A={
+  startupPrice:49,startupSetup:199,
+  smePrice:99,smeSetup:999,smeAvgSeats:3,
+  entPrice:149,entSetup:4999,entAvgSeats:12,
+  mx:0.78,ms:0.18,me:0.04,
+  cs:0.032,csm:0.018,ce:0.006,
+  es:0.008,esm:0.015,ee:0.022,
+  cac:{s:95,m:650,e:4200},
+  gm:0.76,
+  gmvS:80000,gmvM:420000,gmvE:2200000,
+  pfr:0.005,ptf:0.10,tpcy:48,cfr:0.0025,cpct:0.15,
+  govY1:500000,govGrow:2.2,
+  costs:{eng:1200000,sm:1500000,ops:500000,leg:300000,inf:200000,lead:800000},
+  fund:5000000,
+  // GTM
+  repCost:6000,inboundConv:0.08,programSpend:25000,
+};
+const totalCosts=Object.values(A.costs).reduce((a,b)=>a+b,0);
+const burnMo=totalCosts/12;
+
+const SC={
+  bear:{label:'Bear',color:'#B83232',y1:1200,g:[1,1.8,2.5],gov:0.6},
+  base:{label:'Base',color:'#C8A020',y1:5000,g:[1,3.0,3.2],gov:1.0},
+  bull:{label:'Bull',color:'#3AA068',y1:10000,g:[1,3.5,4.0],gov:1.6},
+};
+
+const PRESETS={
+  bear:{growth:1.8,churn:1.8,arpu:0.85,gmvFee:0.3,reps:3,leads:30,win:8,inbound:80},
+  base:{growth:3.0,churn:1.0,arpu:1.0,gmvFee:0.5,reps:5,leads:40,win:15,inbound:200},
+  bull:{growth:4.5,churn:0.7,arpu:1.3,gmvFee:0.8,reps:10,leads:60,win:22,inbound:600},
+};
+
+const INSIGHTS={
+  bear:'Downside protection: Government data licensing provides a non-dilutive revenue backstop independent of platform growth rate.',
+  base:'Efficiency peak: LTV:CAC and Net Margins align with top-quartile SaaS benchmarks. GMV layer compounds silently.',
+  bull:'Hyper-scale: Transactional fees begin to dominate the revenue mix, shifting the valuation conversation toward Fintech multiples.',
+};
+
+let scenario='base',activeTab='summary';
+let growthOverride=null,churnMult=1,arpuMult=1,gmvFeeMult=1;
+let reps=5,leadsPerRep=40,winRate=0.15,inboundLeads=200;
+const charts={};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// FORMATTERS
+// ═══════════════════════════════════════════════════════════════════════════════
+const fmt=(n,d=1)=>{
+  if(n==null||isNaN(n))return'—';
+  const abs=Math.abs(n),sign=n<0?'-':'';
+  if(abs>=1e9)return`${sign}£${(abs/1e9).toFixed(d)}B`;
+  if(abs>=1e6)return`${sign}£${(abs/1e6).toFixed(d)}M`;
+  if(abs>=1e3)return`${sign}£${(abs/1e3).toFixed(0)}k`;
+  return`${sign}£${Math.round(abs)}`;
+};
+const fmtN=n=>n>=1e6?`${(n/1e6).toFixed(1)}M`:n>=1e3?`${(n/1e3).toFixed(0)}k`:n?.toLocaleString();
+const fmtP=n=>`${(n*100).toFixed(1)}%`;
+const fmtX=n=>`${n.toFixed(1)}×`;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MODEL
+// ═══════════════════════════════════════════════════════════════════════════════
+function txn(cos){
+  const s=Math.round(cos*A.mx),m=Math.round(cos*A.ms),e=Math.round(cos*A.me);
+  const gmv=s*A.gmvS+m*A.gmvM+e*A.gmvE;
+  const fee=A.pfr*gmvFeeMult;
+  return{gmv,pf:gmv*fee,pt:cos*A.tpcy*A.ptf,cf:gmv*A.cpct*A.cfr,total:gmv*fee+cos*A.tpcy*A.ptf+gmv*A.cpct*A.cfr};
+}
+
+function model(sc){
+  const{y1,g,gov}=SC[sc];
+  const g1=growthOverride||g[1];
+  const cos=[y1,Math.round(y1*g1),Math.round(y1*g1*g[2])];
+  return cos.map((c,i)=>{
+    const yr=i+1,s=Math.round(c*A.mx),m=Math.round(c*A.ms),e=Math.round(c*A.me);
+    const sub=(s*A.startupPrice+m*A.smePrice*A.smeAvgSeats+e*A.entPrice*A.entAvgSeats)*12*arpuMult;
+    const setup=s*A.startupSetup+m*A.smeSetup+e*A.entSetup;
+    const t=txn(c);
+    const govR=A.govY1*gov*Math.pow(A.govGrow,yr-1);
+    const total=sub+setup+t.total+govR;
+    const cogs=total*(1-A.gm),gp=total-cogs;
+    const sc2=yr===1?1:yr===2?1.4:2.0;
+    const smE=A.costs.sm*sc2,rdE=A.costs.eng*sc2;
+    const gaE=(A.costs.ops+A.costs.leg+A.costs.lead)*(yr===1?1:yr===2?1.2:1.5);
+    const infE=A.costs.inf*sc2*1.5;
+    const opex=smE+rdE+gaE+infE,ebitda=gp-opex;
+    const bc=(A.mx*A.cs+A.ms*A.csm+A.me*A.ce)*churnMult;
+    const nrr=1-bc+A.mx*A.es+A.ms*A.esm+A.me*A.ee;
+    return{yr,c,s,m,e,sub,setup,txnTotal:t.total,txnPF:t.pf,txnPT:t.pt,txnCF:t.cf,gmv:t.gmv,govR,total,cogs,gp,gm:gp/total,smE,rdE,gaE,infE,opex,ebitda,em:ebitda/total,mrr:sub/12,arr:sub,arpu:Math.round(sub/c/12),nrr,bc};
+  });
+}
+
+function quarterly(sc){
+  const{y1,g}=SC[sc];
+  const g1=growthOverride||g[1];
+  const targets=[y1,Math.round(y1*g1),Math.round(y1*g1*g[2])];
+  const arpu=(A.mx*A.startupPrice+A.ms*A.smePrice*A.smeAvgSeats+A.me*A.entPrice*A.entAvgSeats)*arpuMult;
+  const bc=(A.mx*A.cs+A.ms*A.csm+A.me*A.ce)*churnMult;
+  const be=A.mx*A.es+A.ms*A.esm+A.me*A.ee;
+  let ex=0;const out=[];
+  for(let yr=0;yr<3;yr++){
+    const prev=yr===0?0:targets[yr-1];
+    const qInc=Math.round((targets[yr]-prev)/4);
+    for(let q=0;q<4;q++){
+      const newMRR=qInc*arpu,ch=ex*arpu*bc*3,exp=ex*arpu*be*3;
+      ex=ex+qInc-Math.round(ex*bc*3);
+      out.push({label:`Y${yr+1}Q${q+1}`,newMRR:Math.round(newMRR),expMRR:Math.round(exp),chMRR:Math.round(-ch),net:Math.round(newMRR+exp-ch),end:Math.round(ex*arpu),cos:ex});
+    }
+  }
+  return out;
+}
+
+function sensitivity(sc){
+  const{y1}=SC[sc];
+  const gs=[2.0,2.5,3.0,3.5,4.0],cs=[1,2,3,4,5];
+  const arpu=(A.mx*A.startupPrice+A.ms*A.smePrice*A.smeAvgSeats+A.me*A.entPrice*A.entAvgSeats)*arpuMult;
+  return gs.map(g=>({g,vals:cs.map(c=>{const y3=Math.round(y1*g*g);return Math.round(y3*arpu*12*(1-c/100)/1e6);})}));
+}
+
+function ltv(seg){
+  const ch={s:A.cs,m:A.csm,e:A.ce}[seg]*churnMult;
+  const ar={s:A.startupPrice,m:A.smePrice*A.smeAvgSeats,e:A.entPrice*A.entAvgSeats}[seg]*arpuMult;
+  return ar*A.gm/ch;
+}
+
+// GTM
+function gtmCalc(){
+  const outboundPerMo=Math.round(reps*leadsPerRep*winRate);
+  const inboundPerMo=Math.round(inboundLeads*A.inboundConv);
+  const totalPerMo=outboundPerMo+inboundPerMo;
+  const y1=totalPerMo*12;
+  const smBurn=reps*A.repCost+A.programSpend;
+  const cac=totalPerMo>0?smBurn/totalPerMo:0;
+  const blendedArpu=(A.mx*A.startupPrice+A.ms*A.smePrice*A.smeAvgSeats+A.me*A.entPrice*A.entAvgSeats)*arpuMult;
+  const payback=cac/(blendedArpu*A.gm);
+  const newARRPerMo=totalPerMo*blendedArpu*12;
+  const magic=newARRPerMo/(smBurn*12);
+  return{outboundPerMo,inboundPerMo,totalPerMo,y1,smBurn,cac,payback,magic,blendedArpu};
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CHART HELPERS
+// ═══════════════════════════════════════════════════════════════════════════════
+Chart.defaults.color='#7A8899';
+Chart.defaults.borderColor='#0E1E36';
+Chart.defaults.font.family="'Cormorant Garamond',Georgia,serif";
+Chart.defaults.font.size=11;
+
+const GOLD='#C8A020',BLUE='#3A8CC4',GREEN='#2E7D52',GREEN_LT='#3AA068',RED='#B83232',GOLD_DIM='#7A6018',GREY='#3D4B5C',BLUE_LT='#5AA8D8';
+const tt={backgroundColor:'#060F1F',borderColor:GOLD,borderWidth:1,titleColor:GOLD,bodyColor:'#EEF2F8',titleFont:{family:"'Playfair Display',serif",style:'italic',size:13},bodyFont:{family:"'Courier Prime',monospace",size:12},padding:12,cornerRadius:2};
+
+function mk(id,type,data,opts={}){
+  const el=document.getElementById(id);
+  if(!el)return;
+  if(charts[id])charts[id].destroy();
+  charts[id]=new Chart(el,{type,data,options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{boxWidth:10,usePointStyle:true,pointStyle:'circle'}},tooltip:tt},...opts}});
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CONTROL HANDLERS
+// ═══════════════════════════════════════════════════════════════════════════════
+function updateGrowth(v){growthOverride=parseFloat(v);document.getElementById('growthVal').textContent=`${parseFloat(v).toFixed(1)}×`;render();}
+function updateChurn(v){churnMult=parseFloat(v);document.getElementById('churnVal').textContent=`${parseFloat(v).toFixed(2)}×`;render();}
+function updateARPU(v){arpuMult=parseFloat(v);document.getElementById('arpuVal').textContent=`${parseFloat(v).toFixed(2)}×`;render();}
+function updateGMV(v){gmvFeeMult=parseFloat(v)/0.5;document.getElementById('gmvVal').textContent=`${parseFloat(v).toFixed(2)}%`;render();}
+
+function updateReps(v){reps=parseInt(v);document.getElementById('repsVal').textContent=v;render();}
+function updateLeads(v){leadsPerRep=parseInt(v);document.getElementById('leadsVal').textContent=v;render();}
+function updateWin(v){winRate=parseInt(v)/100;document.getElementById('winVal').textContent=`${v}%`;render();}
+function updateInbound(v){inboundLeads=parseInt(v);document.getElementById('inbVal').textContent=v;render();}
+
+function resetSliders(){
+  growthOverride=null;churnMult=1;arpuMult=1;gmvFeeMult=1;
+  reps=5;leadsPerRep=40;winRate=0.15;inboundLeads=200;
+  const sliders=document.querySelectorAll('input[type=range]');
+  if(sliders.length>=8){
+    sliders[0].value=3;sliders[1].value=1;sliders[2].value=1;sliders[3].value=0.5;
+    sliders[4].value=5;sliders[5].value=40;sliders[6].value=15;sliders[7].value=200;
+  }
+  document.getElementById('growthVal').textContent='3.0×';
+  document.getElementById('churnVal').textContent='1.0×';
+  document.getElementById('arpuVal').textContent='1.0×';
+  document.getElementById('gmvVal').textContent='0.50%';
+  document.getElementById('repsVal').textContent='5';
+  document.getElementById('leadsVal').textContent='40';
+  document.getElementById('winVal').textContent='15%';
+  document.getElementById('inbVal').textContent='200';
+  render();
+}
+
+function triggerStress(){
+  document.body.style.transition='background 0.18s';document.body.style.background='#1a0507';
+  setTimeout(()=>{document.body.style.background='';},220);
+  growthOverride=1.5;churnMult=2.5;arpuMult=0.8;gmvFeeMult=0.6;
+  reps=3;leadsPerRep=25;winRate=0.06;inboundLeads=50;
+  const sliders=document.querySelectorAll('input[type=range]');
+  if(sliders.length>=8){
+    sliders[0].value=1.5;sliders[1].value=2.5;sliders[2].value=0.8;sliders[3].value=0.3;
+    sliders[4].value=3;sliders[5].value=25;sliders[6].value=6;sliders[7].value=50;
+  }
+  document.getElementById('growthVal').textContent='1.5×';
+  document.getElementById('churnVal').textContent='2.5×';
+  document.getElementById('arpuVal').textContent='0.80×';
+  document.getElementById('gmvVal').textContent='0.30%';
+  document.getElementById('repsVal').textContent='3';
+  document.getElementById('leadsVal').textContent='25';
+  document.getElementById('winVal').textContent='6%';
+  document.getElementById('inbVal').textContent='50';
+  document.getElementById('insight-text').textContent='Stress Test Active — Worst case: 2.5× churn, 1.5× growth, 0.8× ARPU, weakened GTM. Model remains structurally solvent through government data floor.';
+  render();
+}
+
+function setScenario(s){
+  scenario=s;
+  document.querySelectorAll('.scen-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.scen-btn.${s}`).classList.add('active');
+  const p=PRESETS[s];
+  if(p){
+    growthOverride=p.growth;churnMult=p.churn;arpuMult=p.arpu;gmvFeeMult=p.gmvFee/0.5;
+    reps=p.reps;leadsPerRep=p.leads;winRate=p.win/100;inboundLeads=p.inbound;
+    const sliders=document.querySelectorAll('input[type=range]');
+    if(sliders.length>=8){
+      sliders[0].value=p.growth;sliders[1].value=p.churn;sliders[2].value=p.arpu;sliders[3].value=p.gmvFee;
+      sliders[4].value=p.reps;sliders[5].value=p.leads;sliders[6].value=p.win;sliders[7].value=p.inbound;
+    }
+    document.getElementById('growthVal').textContent=`${p.growth.toFixed(1)}×`;
+    document.getElementById('churnVal').textContent=`${p.churn.toFixed(2)}×`;
+    document.getElementById('arpuVal').textContent=`${p.arpu.toFixed(2)}×`;
+    document.getElementById('gmvVal').textContent=`${p.gmvFee.toFixed(2)}%`;
+    document.getElementById('repsVal').textContent=p.reps;
+    document.getElementById('leadsVal').textContent=p.leads;
+    document.getElementById('winVal').textContent=`${p.win}%`;
+    document.getElementById('inbVal').textContent=p.inbound;
+  }
+  document.getElementById('insight-text').textContent=INSIGHTS[s]||INSIGHTS.base;
+  render();
+}
+
+function setTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`tab-${id}`).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  activeTab=id;
+  render();
+}
+
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click',function(){setTab(this.dataset.tab);});
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════════════════════
+function render(){
+  const M=model(scenario),Q=quarterly(scenario),S=sensitivity(scenario),G=gtmCalc();
+  const runway=A.fund/burnMo;
+
+  // SUMMARY
+  if(activeTab==='summary'){
+    document.getElementById('s-y1arr').textContent=fmt(M[0].arr);
+    document.getElementById('s-y1cos').textContent=`${fmtN(M[0].c)} companies`;
+    document.getElementById('s-y3arr').textContent=fmt(M[2].arr);
+    document.getElementById('s-y3cos').textContent=`${fmtN(M[2].c)} companies`;
+    document.getElementById('s-y1gmv').textContent=fmt(M[0].gmv);
+    document.getElementById('s-y3gmv').textContent=fmt(M[2].gmv);
+    document.getElementById('s-churn').textContent=fmtP(M[0].bc);
+    document.getElementById('s-nrr').textContent=fmtP(M[0].nrr);
+    document.getElementById('s-nrr-sub').textContent=M[0].nrr>1?'>100% expanding':'<100% contracting';
+    document.getElementById('s-nrr-box').className='mb '+(M[0].nrr>1?'green':'red');
+    document.getElementById('s-runway').textContent=`${Math.round(runway)} mo`;
+
+    mk('chart-revenue','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
+      {label:'Subscriptions',data:M.map(m=>m.sub),borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,tension:0.4,borderWidth:2,pointBackgroundColor:GOLD},
+      {label:'Transaction Fees',data:M.map(m=>m.txnTotal),borderColor:BLUE,backgroundColor:BLUE+'18',fill:true,tension:0.4,borderWidth:2,pointBackgroundColor:BLUE},
+      {label:'Government Data',data:M.map(m=>m.govR),borderColor:GREEN_LT,backgroundColor:GREEN_LT+'15',fill:true,tension:0.4,borderWidth:1.5,pointBackgroundColor:GREEN_LT},
+      {label:'Setup Fees',data:M.map(m=>m.setup),borderColor:GOLD_DIM,backgroundColor:GOLD_DIM+'15',fill:true,tension:0.4,borderWidth:1.5,pointBackgroundColor:GOLD_DIM},
+    ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+
+    const rows=[
+      {l:'Companies on Platform',v:M.map(m=>fmtN(m.c)),cagr:fmtP(Math.pow(M[2].c/M[0].c,0.5)-1)},
+      {l:'MRR',v:M.map(m=>fmt(m.mrr)),cagr:fmtP(Math.pow(M[2].mrr/M[0].mrr,0.5)-1)},
+      {l:'ARR',v:M.map(m=>fmt(m.arr)),cagr:fmtP(Math.pow(M[2].arr/M[0].arr,0.5)-1),hl:true,cls:'gold'},
+      {l:'GMV (TPV)',v:M.map(m=>fmt(m.gmv)),cagr:fmtP(Math.pow(M[2].gmv/M[0].gmv,0.5)-1),cls:'blue'},
+      {l:'Transaction Revenue',v:M.map(m=>fmt(m.txnTotal)),cagr:fmtP(Math.pow(M[2].txnTotal/M[0].txnTotal,0.5)-1)},
+      {l:'Government Data Revenue',v:M.map(m=>fmt(m.govR)),cagr:fmtP(Math.pow(M[2].govR/M[0].govR,0.5)-1)},
+      {l:'Total Revenue',v:M.map(m=>fmt(m.total)),cagr:fmtP(Math.pow(M[2].total/M[0].total,0.5)-1),hl:true,cls:'gold'},
+      {l:'Gross Profit',v:M.map(m=>fmt(m.gp)),cagr:'—'},
+      {l:'EBITDA',v:M.map(m=>fmt(m.ebitda)),cagr:'—',cls:'profit'},
+      {l:'EBITDA Margin',v:M.map(m=>fmtP(m.em)),cagr:'—',cls:'profit'},
+      {l:'NRR',v:M.map(m=>fmtP(m.nrr)),cagr:'—'},
+      {l:'ARPU / mo',v:M.map(m=>fmt(m.arpu)),cagr:'—'},
+    ];
+    document.getElementById('summary-table').innerHTML=rows.map(r=>{
+      const profit=r.cls==='profit';
+      const vc=v=>profit?(v.includes('-')?'red':'green'):r.cls||'val';
+      return`<tr class="${r.hl?'hl':''}"><td>${r.l}</td>${r.v.map(v=>`<td class="r ${vc(v)}">${v}</td>`).join('')}<td class="r" style="color:var(--grey-dk);font-family:'Courier Prime',monospace;font-size:11px;">${r.cagr}</td></tr>`;
+    }).join('');
+  }
+
+  // GTM ENGINE
+  if(activeTab==='gtm'){
+    document.getElementById('gtm-outbound').textContent=G.outboundPerMo;
+    document.getElementById('gtm-inbound').textContent=G.inboundPerMo;
+    document.getElementById('gtm-total').textContent=G.totalPerMo;
+    document.getElementById('gtm-y1').textContent=fmtN(G.y1);
+    const target=M[0].c;
+    const gap=G.y1-target;
+    const status=gap>=0?`✓ Exceeds Y1 target by ${fmtN(gap)}`:`Gap to target: ${fmtN(Math.abs(gap))} customers`;
+    document.getElementById('gtm-y1-status').textContent=status;
+    document.getElementById('gtm-y1-status').style.color=gap>=0?'var(--green-lt)':'var(--red-lt)';
+
+    document.getElementById('gtm-cac').textContent=fmt(G.cac);
+    document.getElementById('gtm-payback').textContent=`${G.payback.toFixed(1)} mo`;
+    document.getElementById('gtm-sm').textContent=fmt(G.smBurn);
+    document.getElementById('gtm-magic').textContent=G.magic.toFixed(2);
+
+    mk('chart-channels','doughnut',{
+      labels:['Outbound','Inbound'],
+      datasets:[{data:[G.outboundPerMo,G.inboundPerMo],backgroundColor:[GOLD,BLUE],borderColor:'#060F1F',borderWidth:2}]
+    },{cutout:'65%',plugins:{legend:{position:'bottom'}}});
+
+    const acqMonths=[];let cum=0;
+    for(let i=1;i<=24;i++){cum+=G.totalPerMo;acqMonths.push({m:`M${i}`,cum,monthly:G.totalPerMo});}
+    mk('chart-acquisition','line',{
+      labels:acqMonths.map(m=>m.m),
+      datasets:[
+        {label:'Cumulative Customers',data:acqMonths.map(m=>m.cum),borderColor:GOLD,backgroundColor:GOLD+'15',fill:true,tension:0.3,borderWidth:2,pointRadius:0},
+        {label:'Target Y1',data:Array(24).fill(target),borderColor:GREEN_LT,borderDash:[4,4],borderWidth:1.5,pointRadius:0,backgroundColor:'transparent'},
+      ]
+    },{scales:{y:{ticks:{callback:v=>v.toLocaleString()},grid:{color:'#0E1E3640'}},x:{ticks:{maxTicksLimit:8},grid:{color:'#0E1E3640'}}}});
+
+    document.getElementById('gtm-funnel-table').innerHTML=[
+      ['Sales Reps Active',`${reps}`,'—',`${reps}`,`${reps}`],
+      ['Outbound Leads Generated',`${reps*leadsPerRep}`,'100%',`${reps*leadsPerRep}`,`${(reps*leadsPerRep*12).toLocaleString()}`],
+      ['Outbound Qualified',`${Math.round(reps*leadsPerRep*0.4)}`,'40%',`${Math.round(reps*leadsPerRep*0.4)}`,`${(Math.round(reps*leadsPerRep*0.4)*12).toLocaleString()}`],
+      ['Outbound Won',`${G.outboundPerMo}`,`${(winRate*100).toFixed(0)}%`,`${G.outboundPerMo}`,`${(G.outboundPerMo*12).toLocaleString()}`],
+      ['Inbound Leads',`${inboundLeads}`,'100%',`${inboundLeads}`,`${(inboundLeads*12).toLocaleString()}`],
+      ['Inbound Won',`${inboundLeads}`,`${(A.inboundConv*100).toFixed(0)}%`,`${G.inboundPerMo}`,`${(G.inboundPerMo*12).toLocaleString()}`],
+      ['Total New Customers','—','—',`${G.totalPerMo}`,`${G.y1.toLocaleString()}`],
+    ].map(r=>`<tr><td>${r[0]}</td><td class="r val">${r[1]}</td><td class="r blue">${r[2]}</td><td class="r gold">${r[3]}</td><td class="r gold" style="font-weight:700">${r[4]}</td></tr>`).join('');
+  }
+
+  // P&L
+  if(activeTab==='pl'){
+    const pnl=[
+      {sec:'Revenue'},
+      {l:'Subscription Revenue',v:M.map(m=>m.sub)},
+      {l:'↳ Startup Plans',v:M.map(m=>m.s*A.startupPrice*12*arpuMult),indent:true},
+      {l:'↳ SME Seat Plans',v:M.map(m=>m.m*A.smePrice*A.smeAvgSeats*12*arpuMult),indent:true},
+      {l:'↳ Enterprise Plans',v:M.map(m=>m.e*A.entPrice*A.entAvgSeats*12*arpuMult),indent:true},
+      {l:'Setup & Onboarding Fees',v:M.map(m=>m.setup)},
+      {l:'Transaction Revenue — Stripe Model',v:M.map(m=>m.txnTotal),bold:true},
+      {l:'↳ Platform Fee',v:M.map(m=>m.txnPF),indent:true},
+      {l:'↳ Per-Transaction Fee',v:M.map(m=>m.txnPT),indent:true},
+      {l:'↳ Connect / Marketplace Fee',v:M.map(m=>m.txnCF),indent:true},
+      {l:'Government Data Licensing',v:M.map(m=>m.govR)},
+      {l:'Total Revenue',v:M.map(m=>m.total),bold:true,gold:true},
+      {gap:true},
+      {sec:'Cost of Revenue'},
+      {l:'Infrastructure & Hosting',v:M.map(m=>Math.round(m.total*0.08))},
+      {l:'API & AI Model Costs',v:M.map(m=>Math.round(m.total*0.07))},
+      {l:'Customer Support',v:M.map(m=>Math.round(m.total*0.05))},
+      {l:'Payment Processing (Stripe)',v:M.map(m=>Math.round(m.total*0.04))},
+      {l:'Total COGS',v:M.map(m=>m.cogs),bold:true},
+      {l:'Gross Profit',v:M.map(m=>m.gp),bold:true,gold:true},
+      {l:'Gross Margin %',pct:M.map(m=>m.gm)},
+      {gap:true},
+      {sec:'Operating Expenses'},
+      {l:'Sales & Marketing',v:M.map(m=>m.smE)},
+      {l:'Research & Development',v:M.map(m=>m.rdE)},
+      {l:'General & Administrative',v:M.map(m=>m.gaE)},
+      {l:'Infrastructure (OpEx)',v:M.map(m=>m.infE)},
+      {l:'Total OpEx',v:M.map(m=>m.opex),bold:true},
+      {gap:true},
+      {l:'EBITDA',v:M.map(m=>m.ebitda),bold:true,profit:true},
+      {l:'EBITDA Margin %',pct:M.map(m=>m.em),profit:true},
+    ];
+    document.getElementById('pl-table').innerHTML=pnl.map(r=>{
+      if(r.sec)return`<tr class="sec"><td colspan="7">${r.sec}</td></tr>`;
+      if(r.gap)return`<tr><td colspan="7" style="padding:6px;"></td></tr>`;
+      const vc=v=>{if(r.profit)return v<0?'red':'green';if(r.gold)return'gold';return'val';};
+      return`<tr class="${r.gold?'hl':''}"><td style="padding-left:${r.indent?'28px':'12px'};color:${r.gold?'var(--gold)':r.bold?'var(--white)':'var(--grey)'};font-weight:${r.bold?600:400};">${r.l}</td>${M.map((m,i)=>{const v=r.pct?r.pct[i]:r.v[i];const pct=r.pct?'':fmtP(Math.abs(r.v[i]/m.total));return`<td class="r ${vc(v)}">${r.pct?fmtP(v):fmt(v)}</td><td class="r" style="color:var(--grey-dk);font-size:10px;font-family:'Courier Prime',monospace;">${pct}</td>`;}).join('')}</tr>`;
+    }).join('');
+
+    mk('chart-mix','bar',{labels:['Year 1','Year 2','Year 3'],datasets:[
+      {label:'Subscriptions',data:M.map(m=>Math.round(m.sub/m.total*100)),backgroundColor:GOLD,stack:'a'},
+      {label:'Setup',data:M.map(m=>Math.round(m.setup/m.total*100)),backgroundColor:GOLD_DIM,stack:'a'},
+      {label:'Transactions',data:M.map(m=>Math.round(m.txnTotal/m.total*100)),backgroundColor:BLUE,stack:'a'},
+      {label:'Gov Data',data:M.map(m=>Math.round(m.govR/m.total*100)),backgroundColor:GREEN_LT,stack:'a'},
+    ]},{scales:{y:{ticks:{callback:v=>`${v}%`},stacked:true,grid:{color:'#0E1E3640'}},x:{stacked:true,grid:{color:'#0E1E3640'}}}});
+
+    mk('chart-ebitda','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
+      {label:'Gross Profit',data:M.map(m=>m.gp),borderColor:GOLD,backgroundColor:'transparent',borderWidth:2,tension:0.4,pointBackgroundColor:GOLD},
+      {label:'OpEx',data:M.map(m=>m.opex),borderColor:RED,backgroundColor:'transparent',borderWidth:2,tension:0.4,pointBackgroundColor:RED},
+      {label:'EBITDA',data:M.map(m=>m.ebitda),borderColor:GREEN_LT,backgroundColor:GREEN_LT+'15',fill:true,borderWidth:2.5,tension:0.4,pointBackgroundColor:GREEN_LT},
+    ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+  }
+
+  // UNIT
+  if(activeTab==='unit'){
+    const segs=[{k:'s',label:'Startup',price:A.startupPrice*arpuMult,ch:A.cs*churnMult},{k:'m',label:'SME',price:A.smePrice*A.smeAvgSeats*arpuMult,ch:A.csm*churnMult},{k:'e',label:'Enterprise',price:A.entPrice*A.entAvgSeats*arpuMult,ch:A.ce*churnMult}];
+    document.getElementById('unit-segs').innerHTML=segs.map(s=>{
+      const l=ltv(s.k),c=A.cac[s.k],ratio=l/c,payback=Math.round(c/(s.price*A.gm));
+      return`<div class="seg"><h3>${s.label}</h3><div class="sg">
+        <div class="sm"><span class="sl">ARPU/mo</span><span class="sv2" style="color:var(--white);">${fmt(s.price)}</span></div>
+        <div class="sm"><span class="sl">CAC</span><span class="sv2" style="color:var(--white);">${fmt(c)}</span></div>
+        <div class="sm"><span class="sl">LTV Gross</span><span class="sv2" style="color:var(--gold);">${fmt(l)}</span></div>
+        <div class="sm"><span class="sl">LTV:CAC</span><span class="sv2" style="color:${ratio>3?'var(--green-lt)':'var(--red-lt)'};">${fmtX(ratio)}</span></div>
+        <div class="sm"><span class="sl">Payback</span><span class="sv2" style="color:var(--blue-lt);">${payback}mo</span></div>
+        <div class="sm"><span class="sl">Mo Churn</span><span class="sv2" style="color:var(--red-lt);">${fmtP(s.ch)}</span></div>
+        <div class="sm"><span class="sl">Avg Life</span><span class="sv2" style="color:var(--grey);">${(1/s.ch/12).toFixed(1)}yr</span></div>
+        <div class="sm"><span class="sl">Ann Churn</span><span class="sv2" style="color:var(--grey);">${fmtP(1-Math.pow(1-s.ch,12))}</span></div>
+      </div></div>`;
+    }).join('');
+
+    mk('chart-ltvcac','bar',{labels:['Startup','SME','Enterprise'],datasets:[
+      {label:'LTV',data:segs.map(s=>Math.round(ltv(s.k))),backgroundColor:GOLD},
+      {label:'CAC',data:segs.map(s=>A.cac[s.k]),backgroundColor:BLUE+'90'},
+    ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+
+    const cohort=Array.from({length:24},(_,i)=>({x:i+1,logo:Math.round(Math.pow(1-A.cs*churnMult,i)*100),rev:Math.round(Math.pow(1-A.cs*churnMult,i)*(1+A.es*i*0.5)*100)}));
+    mk('chart-cohort','line',{labels:cohort.map(c=>`M${c.x}`),datasets:[
+      {label:'Logo Retention %',data:cohort.map(c=>c.logo),borderColor:GREY,backgroundColor:'transparent',borderWidth:1.5,tension:0.4,pointRadius:0},
+      {label:'Revenue Retention %',data:cohort.map(c=>c.rev),borderColor:GOLD,backgroundColor:GOLD+'15',fill:true,borderWidth:2,tension:0.4,pointRadius:0},
+    ]},{scales:{y:{ticks:{callback:v=>`${v}%`},grid:{color:'#0E1E3640'}},x:{ticks:{maxTicksLimit:8},grid:{color:'#0E1E3640'}}}});
+
+    mk('chart-payback','bar',{labels:['Startup','SME','Enterprise'],datasets:[{label:'CAC Payback (months)',data:segs.map(s=>Math.round(A.cac[s.k]/(s.price*A.gm))),backgroundColor:[GOLD,BLUE,GREEN_LT]}]},{indexAxis:'y',scales:{x:{ticks:{callback:v=>`${v}mo`},grid:{color:'#0E1E3640'}},y:{grid:{color:'#0E1E3640'}}}});
+  }
+
+  // MRR
+  if(activeTab==='mrr'){
+    document.getElementById('mrr-y1').textContent=fmt(Q[3]?.end);
+    document.getElementById('mrr-y2').textContent=fmt(Q[7]?.end);
+    document.getElementById('mrr-y3').textContent=fmt(Q[11]?.end);
+    document.getElementById('mrr-peak').textContent=fmt(Math.max(...Q.map(q=>q.net)));
+
+    mk('chart-waterfall','bar',{labels:Q.map(q=>q.label),datasets:[
+      {label:'New MRR',data:Q.map(q=>q.newMRR),backgroundColor:GOLD+'CC',stack:'a'},
+      {label:'Expansion',data:Q.map(q=>q.expMRR),backgroundColor:GREEN_LT+'CC',stack:'a'},
+      {label:'Churned',data:Q.map(q=>q.chMRR),backgroundColor:RED+'CC',stack:'a'},
+    ]},{scales:{y:{ticks:{callback:fmt},stacked:true,grid:{color:'#0E1E3640'}},x:{stacked:true,grid:{color:'#0E1E3640'}}}});
+
+    mk('chart-mrrline','line',{labels:Q.map(q=>q.label),datasets:[{label:'Ending MRR',data:Q.map(q=>q.end),borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,tension:0.4,borderWidth:2.5,pointRadius:2,pointBackgroundColor:GOLD}]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+
+    document.getElementById('mrr-table').innerHTML=Q.map((q,i)=>`<tr style="background:${i%4===3?'rgba(200,160,32,0.04)':'transparent'}"><td class="val">${q.label}</td><td class="r val">${q.cos?.toLocaleString()}</td><td class="r gold">${fmt(q.newMRR)}</td><td class="r green">${fmt(q.expMRR)}</td><td class="r red">${fmt(Math.abs(q.chMRR))}</td><td class="r ${q.net>0?'green':'red'}" style="font-weight:700">${fmt(q.net)}</td><td class="r gold" style="font-weight:700">${fmt(q.end)}</td></tr>`).join('');
+  }
+
+  // SAAS METRICS
+  if(activeTab==='metrics'){
+    // Rule of 40
+    const growth=(M[1].total-M[0].total)/M[0].total;
+    const r40=growth*100+M[1].em*100;
+    document.getElementById('m-r40').textContent=`${r40.toFixed(0)}`;
+    document.getElementById('m-r40').style.color=r40>40?'var(--green-lt)':r40>20?'var(--gold)':'var(--red-lt)';
+    document.getElementById('m-r40-status').textContent=r40>40?'Elite tier ✓':r40>20?'Healthy':'Below benchmark';
+
+    // Burn Multiple
+    const netNewARR=M[1].arr-M[0].arr;
+    const netBurn=Math.max(0,M[0].opex-M[0].gp);
+    const burnMult=netBurn/netNewARR;
+    document.getElementById('m-burn-mult').textContent=burnMult.toFixed(2);
+    document.getElementById('m-burn-mult').style.color=burnMult<1?'var(--green-lt)':burnMult<2?'var(--gold)':'var(--red-lt)';
+    document.getElementById('m-burn-status').textContent=burnMult<1?'Elite tier ✓':burnMult<2?'Strong':'Inefficient';
+
+    // Magic Number
+    const magic=netNewARR/M[0].smE;
+    document.getElementById('m-magic').textContent=magic.toFixed(2);
+    document.getElementById('m-magic').style.color=magic>0.75?'var(--green-lt)':magic>0.5?'var(--gold)':'var(--red-lt)';
+    document.getElementById('m-magic-status').textContent=magic>0.75?'Elite tier ✓':magic>0.5?'Healthy':'Below benchmark';
+
+    // Quick Ratio
+    const qr=(Q[3].newMRR+Q[3].expMRR)/Math.abs(Q[3].chMRR);
+    document.getElementById('m-quick').textContent=qr.toFixed(1);
+    document.getElementById('m-quick').style.color=qr>4?'var(--green-lt)':qr>2?'var(--gold)':'var(--red-lt)';
+    document.getElementById('m-quick-status').textContent=qr>4?'Elite tier ✓':qr>2?'Healthy':'Concerning';
+
+    // Other metrics
+    const blendedCAC=A.mx*A.cac.s+A.ms*A.cac.m+A.me*A.cac.e;
+    const blendedLTV=A.mx*ltv('s')+A.ms*ltv('m')+A.me*ltv('e');
+    document.getElementById('m-cac-rec').textContent=`${(blendedCAC/(M[0].arpu*A.gm)).toFixed(1)} mo`;
+    document.getElementById('m-ltv-cac').textContent=fmtX(blendedLTV/blendedCAC);
+    document.getElementById('m-ndr').textContent=fmtP(M[0].nrr);
+    document.getElementById('m-gdr').textContent=fmtP(1-M[0].bc);
+
+    // Benchmark table
+    const bench=[
+      {m:'Annual Growth Rate',ba:'<50%',av:'50-100%',tq:'100-200%',el:'>200%',v:fmtP(growth)},
+      {m:'Gross Margin',ba:'<60%',av:'60-70%',tq:'70-80%',el:'>80%',v:'76.0%'},
+      {m:'EBITDA Margin',ba:'<-50%',av:'-50% to 0',tq:'0-20%',el:'>20%',v:fmtP(M[1].em)},
+      {m:'NRR',ba:'<100%',av:'100-110%',tq:'110-120%',el:'>120%',v:fmtP(M[0].nrr)},
+      {m:'Rule of 40',ba:'<20',av:'20-40',tq:'40-60',el:'>60',v:r40.toFixed(0)},
+      {m:'Burn Multiple',ba:'>3',av:'2-3',tq:'1-2',el:'<1',v:burnMult.toFixed(2)},
+      {m:'Magic Number',ba:'<0.5',av:'0.5-0.75',tq:'0.75-1.0',el:'>1.0',v:magic.toFixed(2)},
+      {m:'CAC Payback',ba:'>24mo',av:'18-24mo',tq:'12-18mo',el:'<12mo',v:`${(blendedCAC/(M[0].arpu*A.gm)).toFixed(0)}mo`},
+    ];
+    document.getElementById('bench-table').innerHTML=bench.map(b=>`<tr><td>${b.m}</td><td class="r" style="color:var(--red-lt)">${b.ba}</td><td class="r" style="color:var(--grey)">${b.av}</td><td class="r" style="color:var(--gold)">${b.tq}</td><td class="r" style="color:var(--green-lt)">${b.el}</td><td class="r gold" style="font-weight:700">${b.v}</td></tr>`).join('');
+
+    mk('chart-r40','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
+      {label:'Rule of 40 Score',data:[r40,r40*1.2,r40*1.35],borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,tension:0.4,borderWidth:2.5,pointBackgroundColor:GOLD},
+      {label:'Elite Threshold',data:[60,60,60],borderColor:GREEN_LT,borderDash:[4,4],borderWidth:1.5,pointRadius:0,backgroundColor:'transparent'},
+      {label:'Top Quartile',data:[40,40,40],borderColor:BLUE,borderDash:[4,4],borderWidth:1.5,pointRadius:0,backgroundColor:'transparent'},
+    ]},{scales:{y:{grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+
+    mk('chart-burn','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
+      {label:'Burn Multiple',data:[burnMult,Math.max(0,(Math.max(0,M[1].opex-M[1].gp)/(M[2].arr-M[1].arr))),Math.max(0,(Math.max(0,M[2].opex-M[2].gp)/(M[2].arr*0.5)))],borderColor:RED,backgroundColor:RED+'15',fill:true,tension:0.4,borderWidth:2.5,pointBackgroundColor:RED},
+      {label:'Elite (<1)',data:[1,1,1],borderColor:GREEN_LT,borderDash:[4,4],borderWidth:1.5,pointRadius:0,backgroundColor:'transparent'},
+    ]},{scales:{y:{grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+  }
+
+  // MARKET
+  if(activeTab==='market'){
+    document.getElementById('mkt-som').textContent=fmt(M[2].total);
+    document.getElementById('mkt-som-sub').textContent=`${(M[2].total/42e9*100).toFixed(3)}% of SAM`;
+    mk('chart-market','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
+      {label:'Empire OS Revenue',data:M.map(m=>m.total),borderColor:GOLD,backgroundColor:GOLD+'20',fill:true,tension:0.4,borderWidth:2.5,pointBackgroundColor:GOLD},
+      {label:'1% SAM',data:[420e6,420e6,420e6],borderColor:GREY,backgroundColor:'transparent',borderDash:[4,4],borderWidth:1.5,pointRadius:0},
+      {label:'5% SAM',data:[2.1e9,2.1e9,2.1e9],borderColor:BLUE,backgroundColor:'transparent',borderDash:[4,4],borderWidth:1.5,pointRadius:0},
+    ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+
+    document.getElementById('funnel-rows').innerHTML=[
+      {l:'Total UK Registered',v:'5.5M',p:'100%'},{l:'Active SMEs',v:'3.2M',p:'58%'},
+      {l:'Digitally Active',v:'1.8M',p:'33%'},{l:'AI-Ready',v:'540k',p:'10%'},
+      {l:'Empire OS SOM Y3',v:fmtN(M[2].c),p:`${(M[2].c/5.5e6*100).toFixed(2)}%`,hi:true},
+    ].map(r=>`<div class="fr"><span class="fl">${r.l}</span><div class="fr2"><div class="fv" style="color:${r.hi?'var(--gold)':'var(--white)'}">${r.v}</div><div class="fp">${r.p}</div></div></div>`).join('');
+
+    document.getElementById('gov-rows').innerHTML=[
+      {l:'ONS Data Licensing',v:'£290M/yr'},{l:'HMRC Analytics',v:'£180M/yr'},
+      {l:'Companies House API',v:'£45M/yr'},{l:'Empire OS Y1',v:fmt(M[0].govR),gold:true},
+      {l:'Empire OS Y3',v:fmt(M[2].govR),gold:true},
+    ].map(r=>`<div class="fr"><span class="fl" style="font-style:italic">${r.l}</span><div class="fv" style="color:${r.gold?'var(--gold)':'var(--grey)'}">${r.v}</div></div>`).join('');
+  }
+
+  // RUNWAY
+  if(activeTab==='runway'){
+    document.getElementById('rwy-burn').textContent=fmt(burnMo);
+    document.getElementById('rwy-months').textContent=`${Math.round(runway)} mo`;
+    document.getElementById('rwy-bkmrr').textContent=fmt(burnMo);
+
+    document.getElementById('prog-bars').innerHTML=[
+      {l:'Sales & Marketing',v:A.costs.sm,c:'var(--gold)'},
+      {l:'Engineering & Product',v:A.costs.eng,c:'var(--blue)'},
+      {l:'Leadership & Executive',v:A.costs.lead,c:'var(--green-lt)'},
+      {l:'General & Admin',v:A.costs.ops,c:'var(--grey)'},
+      {l:'Legal & Compliance',v:A.costs.leg,c:'var(--grey-dk)'},
+      {l:'Infrastructure',v:A.costs.inf,c:'var(--gold-dim)'},
+    ].map(r=>`<div class="pr"><div class="ph"><span class="pl">${r.l}</span><span class="pv">${fmt(r.v)} · ${Math.round(r.v/A.fund*100)}%</span></div><div class="pb"><div class="pf" style="width:${r.v/A.fund*100}%;background:${r.c};"></div></div></div>`).join('');
+
+    const cashData=Array.from({length:24},(_,i)=>{const mo=i+1,yr=Math.min(Math.floor(i/12),2);const rev=(M[yr]?.mrr||0)*(mo/(yr*12+12));return{x:`M${mo}`,w:Math.round(A.fund-burnMo*mo+rev*mo*0.5),b:Math.round(A.fund-burnMo*mo)};});
+    mk('chart-cash','line',{labels:cashData.map(d=>d.x),datasets:[
+      {label:'Cash (with revenue)',data:cashData.map(d=>d.w),borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,tension:0.4,borderWidth:2,pointRadius:0},
+      {label:'Pure Burn',data:cashData.map(d=>d.b),borderColor:RED,backgroundColor:RED+'10',fill:true,tension:0.4,borderWidth:1.5,borderDash:[4,4],pointRadius:0},
+    ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{ticks:{maxTicksLimit:8},grid:{color:'#0E1E3640'}}}});
+
+    document.getElementById('milestone-rows').innerHTML=[
+      {n:'Alpha Launch',t:'M1–M3',c:'£800k',o:'50 beta companies',k:'NPS > 40'},
+      {n:'Product-Market Fit',t:'M3–M6',c:'£1.2M',o:'500 paying · £25k MRR',k:'Churn < 5%'},
+      {n:'GTM Scale',t:'M6–M9',c:'£1.5M',o:'2,000 cos · gov pilot',k:'MRR > £100k'},
+      {n:'Series A Readiness',t:'M9–M13',c:'£1.5M',o:'5,000+ cos · £250k MRR',k:'ARR > £3M'},
+    ].map(r=>`<div class="mile"><span class="mn">${r.n}</span><span class="mt">${r.t}</span><span class="mc">${r.c}</span><span class="mo">${r.o}</span><span class="mk">${r.k}</span></div>`).join('');
+
+    // Path to profitability
+    const ppData=Array.from({length:36},(_,i)=>{
+      const mo=i+1,yr=Math.min(Math.floor(i/12),2);
+      const monthShare=(mo-yr*12)/12;
+      const rev=(M[yr]?.total||M[2].total)*monthShare;
+      const op=(M[yr]?.opex||M[2].opex)/12;
+      return{m:`M${mo}`,rev:Math.round(rev),opex:Math.round(op),profit:Math.round(rev-op)};
+    });
+    mk('chart-pathprofit','line',{labels:ppData.map(d=>d.m),datasets:[
+      {label:'Monthly Revenue',data:ppData.map(d=>d.rev),borderColor:GOLD,backgroundColor:GOLD+'15',fill:true,tension:0.4,borderWidth:2,pointRadius:0},
+      {label:'Monthly OpEx',data:ppData.map(d=>d.opex),borderColor:RED,backgroundColor:'transparent',borderWidth:1.5,tension:0.4,pointRadius:0,borderDash:[4,4]},
+      {label:'Monthly Profit',data:ppData.map(d=>d.profit),borderColor:GREEN_LT,backgroundColor:GREEN_LT+'15',fill:true,tension:0.4,borderWidth:2,pointRadius:0},
+    ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{ticks:{maxTicksLimit:9},grid:{color:'#0E1E3640'}}}});
+  }
+
+  // SENSITIVITY
+  if(activeTab==='sensitivity'){
+    const churns=[1,2,3,4,5];
+    const minV=Math.min(...S.flatMap(r=>r.vals)),maxV=Math.max(...S.flatMap(r=>r.vals));
+    document.getElementById('sensitivity-table').innerHTML=`<thead><tr><th style="text-align:left">Growth/Churn</th>${churns.map(c=>`<th>${c}% mo</th>`).join('')}</tr></thead><tbody>${S.map(r=>`<tr><td class="rl">${r.g}×/yr</td>${r.vals.map(v=>{const it=Math.min(1,Math.max(0,(v-minV)/(maxV-minV)));return`<td style="background:rgba(200,160,32,${it*0.32});color:${it>0.6?'var(--gold)':it>0.3?'var(--white)':'var(--grey-dk)'};font-weight:${it>0.5?700:400}">£${v}M</td>`;}).join('')}</tr>`).join('')}</tbody>`;
+
+    const arpuRange=[35,45,55,65,75,85];
+    mk('chart-arpu-sens','line',{labels:arpuRange.map(a=>`£${a}`),datasets:[
+      {label:'Y1 ARR',data:arpuRange.map(a=>Math.round(M[0].c*a*12/1e6*10)/10),borderColor:GOLD_DIM,backgroundColor:'transparent',borderWidth:1.5,tension:0.4,pointRadius:3,pointBackgroundColor:GOLD_DIM},
+      {label:'Y3 ARR',data:arpuRange.map(a=>Math.round(M[2].c*a*12/1e6*10)/10),borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,borderWidth:2.5,tension:0.4,pointRadius:4,pointBackgroundColor:GOLD},
+    ]},{scales:{y:{ticks:{callback:v=>`£${v}M`},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+
+    mk('chart-bk-sens','line',{labels:arpuRange.map(a=>`£${a}`),datasets:[{label:'Companies to break-even',data:arpuRange.map(a=>Math.round(burnMo/(a*A.gm))),borderColor:BLUE,backgroundColor:BLUE+'15',fill:true,tension:0.4,borderWidth:2,pointRadius:4,pointBackgroundColor:BLUE}]},{scales:{y:{ticks:{callback:v=>v.toLocaleString()},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+
+    // Tornado
+    const baseY3=M[2].arr;
+    const tornado=[
+      {var:'Growth Rate ±50%',low:baseY3*0.5,high:baseY3*1.5},
+      {var:'Churn ±50%',low:baseY3*0.85,high:baseY3*1.15},
+      {var:'ARPU ±30%',low:baseY3*0.7,high:baseY3*1.3},
+      {var:'Win Rate ±40%',low:baseY3*0.65,high:baseY3*1.35},
+      {var:'GMV Fee ±60%',low:baseY3*0.92,high:baseY3*1.08},
+      {var:'Gov Revenue ±70%',low:baseY3*0.97,high:baseY3*1.03},
+    ];
+    mk('chart-tornado','bar',{labels:tornado.map(t=>t.var),datasets:[
+      {label:'Downside',data:tornado.map(t=>t.low-baseY3),backgroundColor:RED+'CC'},
+      {label:'Upside',data:tornado.map(t=>t.high-baseY3),backgroundColor:GREEN_LT+'CC'},
+    ]},{indexAxis:'y',scales:{x:{ticks:{callback:v=>fmt(Math.abs(v))},stacked:false,grid:{color:'#0E1E3640'}},y:{grid:{color:'#0E1E3640'}}}});
+  }
+
+  // VALUATION
+  if(activeTab==='valuation'){
+    const baseM=model('base');
+    document.getElementById('val-mult').textContent=fmtX(22.5e6/baseM[0].arr);
+    document.getElementById('val-5x').textContent=fmt(M[2].arr*5);
+    document.getElementById('val-10x').textContent=fmt(M[2].arr*10);
+
+    const multiples=[3,5,7,10,15];
+    mk('chart-val','bar',{labels:multiples.map(m=>`${m}× ARR`),datasets:[
+      {label:'Bear',data:multiples.map(m=>Math.round(model('bear')[2].arr*m/1e6)),backgroundColor:RED+'BB'},
+      {label:'Base',data:multiples.map(m=>Math.round(model('base')[2].arr*m/1e6)),backgroundColor:GOLD+'BB'},
+      {label:'Bull',data:multiples.map(m=>Math.round(model('bull')[2].arr*m/1e6)),backgroundColor:GREEN_LT+'BB'},
+    ]},{scales:{y:{ticks:{callback:v=>`£${v}M`},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
+
+    document.getElementById('comp-rows').innerHTML=[
+      {n:'Notion',s:'Productivity OS',mult:'18× ARR',nrr:'130%'},
+      {n:'Rippling',s:'Business OS',mult:'22× ARR',nrr:'145%'},
+      {n:'Deel',s:'Global Ops',mult:'15× ARR',nrr:'160%'},
+      {n:'Stripe',s:'Fintech Infrastructure',mult:'25× ARR',nrr:'140%'},
+      {n:'Empire OS',s:'Business OS + Gov Data',mult:'5–15× ARR',nrr:fmtP(M[0].nrr),hi:true},
+    ].map(r=>`<div class="comp ${r.hi?'hi':''}"><div><div class="cn" style="color:${r.hi?'var(--gold)':'var(--white)'}">${r.n}</div><div class="cs">${r.s}</div></div><div class="cm"><div class="cmx"><span class="cl">Multiple</span><span class="cv">${r.mult}</span></div><div class="cmx"><span class="cl">NRR</span><span class="cv">${r.nrr}</span></div></div></div>`).join('');
+
+    document.getElementById('moic-cards').innerHTML=[
+      {l:'Bear · 3× ARR · Y3',sc:'bear',mult:3,c:'var(--red-lt)'},
+      {l:'Base · 7× ARR · Y3',sc:'base',mult:7,c:'var(--gold)'},
+      {l:'Bull · 12× ARR · Y3',sc:'bull',mult:12,c:'var(--green-lt)'},
+    ].map(r=>{const m3=model(r.sc)[2],ret=m3.arr*r.mult*0.2,moic=ret/A.fund;return`<div class="moic"><p class="ml2">${r.l}</p><div class="mr"><div class="ms2"><span class="ml3">Investor Return</span><span class="mv2" style="color:${r.c}">${fmt(ret)}</span></div><div class="ms2" style="text-align:right"><span class="ml3">MOIC</span><span class="mv2" style="color:${r.c}">${fmtX(moic)}</span></div></div></div>`;}).join('');
+
+    // Recent comparable exits
+    document.getElementById('exits-rows').innerHTML=[
+      {n:'Wise (UK Listing)',s:'Cross-border fintech',v:'£8.0B',mult:'12× rev','y':'2021'},
+      {n:'Hopin (Acquisition)',s:'Events platform','v':'£4.2B','mult':'18× ARR','y':'2021'},
+      {n:'Tessian (Exit)',s:'Email security','v':'£500M','mult':'10× ARR','y':'2024'},
+      {n:'Babylon Health',s:'Health platform','v':'£2.8B','mult':'8× rev','y':'2021'},
+      {n:'Cazoo',s:'Auto marketplace','v':'£5.5B','mult':'7× rev','y':'2021'},
+    ].map(r=>`<div class="comp"><div><div class="cn">${r.n}</div><div class="cs">${r.s} · ${r.y}</div></div><div class="cm"><div class="cmx"><span class="cl">Value</span><span class="cv">${r.v}</span></div><div class="cmx"><span class="cl">Multiple</span><span class="cv">${r.mult}</span></div></div></div>`).join('');
+  }
+
+  // CAP TABLE
+  if(activeTab==='captable'){
+    document.getElementById('captable-rows').innerHTML=[
+      {h:'Founder (Coat)',inv:'—',pct:'75.0%',sh:'7,500,000',c:'var(--gold)'},
+      {h:'Series Seed Investors',inv:'£5,000,000',pct:'25.0%',sh:'2,500,000',c:'var(--blue-lt)'},
+      {h:'Option Pool (Reserved)',inv:'—',pct:'10.0% (post)',sh:'1,000,000',c:'var(--grey)'},
+      {h:'Total Outstanding',inv:'£5,000,000',pct:'100%',sh:'10,000,000',c:'var(--white)',bold:true},
+    ].map(r=>`<div class="cap-row"><div class="cn2" style="color:${r.c};font-weight:${r.bold?700:400}">${r.h}</div><div class="cv2 r" style="text-align:right;color:var(--white)">${r.inv}</div><div class="cv2 r" style="text-align:right;color:${r.c}">${r.pct}</div><div class="cv2 r" style="text-align:right;color:var(--grey)">${r.sh}</div></div>`).join('');
+
+    mk('chart-dilution','bar',{labels:['Pre-Seed','Post-Seed','Post-Series A','Post-Series B'],datasets:[
+      {label:'Founder',data:[100,75,52,40],backgroundColor:GOLD,stack:'a'},
+      {label:'Seed Investors',data:[0,25,17.5,13.5],backgroundColor:BLUE,stack:'a'},
+      {label:'Series A',data:[0,0,20,15.5],backgroundColor:GREEN_LT,stack:'a'},
+      {label:'Series B',data:[0,0,0,21],backgroundColor:GOLD_DIM,stack:'a'},
+      {label:'Option Pool',data:[0,0,10.5,10],backgroundColor:GREY,stack:'a'},
+    ]},{scales:{y:{ticks:{callback:v=>`${v}%`},stacked:true,grid:{color:'#0E1E3640'}},x:{stacked:true,grid:{color:'#0E1E3640'}}}});
+
+    document.getElementById('exit-table').innerHTML=[
+      {ev:'£50M',y:'Y3 (5× ARR)',fp:'40%',fpr:'£20.0M',ir:'£10.0M (2.0× MOIC)'},
+      {ev:'£100M',y:'Y3 (10× ARR)',fp:'40%',fpr:'£40.0M',ir:'£20.0M (4.0× MOIC)'},
+      {ev:'£250M',y:'Y4 Exit',fp:'38%',fpr:'£95.0M',ir:'£47.5M (9.5× MOIC)'},
+      {ev:'£500M',y:'Y5 Exit',fp:'35%',fpr:'£175.0M',ir:'£87.5M (17.5× MOIC)'},
+      {ev:'£1.0B',y:'Y6+ Unicorn',fp:'33%',fpr:'£330.0M',ir:'£165.0M (33.0× MOIC)'},
+    ].map(r=>`<tr><td class="gold" style="font-weight:700">${r.ev}</td><td class="r blue">${r.y}</td><td class="r val">${r.fp}</td><td class="r gold">${r.fpr}</td><td class="r green">${r.ir}</td></tr>`).join('');
+  }
+
+  // RISK
+  if(activeTab==='risk'){
+    document.getElementById('risk-list').innerHTML=[
+      {sev:'high',h:'Customer Acquisition Cost Inflation',l:'High',i:'£1.2M annual impact at 30% CAC increase',m:'Diversified channel mix (outbound + inbound + partnerships) reduces single-channel dependency. Inbound infrastructure being built in Months 1–6 to reduce reliance on paid acquisition.'},
+      {sev:'high',h:'Government Data Partnership Delay',l:'Medium',i:'£500k–£2M revenue delay over 24 months',m:'Active conversations with ONS data licensing team in progress. Backup commercial data licensing arrangements being negotiated as Plan B. Revenue model viable without gov layer in Bear case.'},
+      {sev:'medium',h:'Competitive Response from Incumbents',l:'High',i:'Pricing pressure of 15–25%',m:'Speed-to-market advantage in unified business OS + payments + AI category. IP moat building through proprietary AI workflow engine. Government data exclusivity creates structural defence.'},
+      {sev:'medium',h:'Engineering Velocity Risk',l:'Medium',i:'3–6 month roadmap slippage',m:'Hired senior CTO before Series A. Product backbone built on proven open-source stack (Next.js, Postgres, Stripe). Modular architecture allows parallel team scaling.'},
+      {sev:'medium',h:'Regulatory Change in AI/Data Space',l:'Medium',i:'£300k compliance overhead',m:'British registration, UK data residency, GDPR-native architecture. Active engagement with ICO. Built-in audit trail and data sovereignty controls from Day 1.'},
+      {sev:'low',h:'Founder Concentration Risk',l:'Low',i:'Operational continuity',m:'Key-person insurance in Series A terms. Senior leadership team being recruited in Y1. Documented operating procedures and decision frameworks (Empire OS itself codifies this).'},
+    ].map(r=>`<div class="risk ${r.sev}"><h4>${r.h}</h4><div class="rmeta"><span>Severity: <strong>${r.sev.toUpperCase()}</strong></span><span>Likelihood: <strong>${r.l}</strong></span><span>Impact: <strong>${r.i}</strong></span></div><p class="rmit"><strong style="color:var(--gold)">Mitigation:</strong> ${r.m}</p></div>`).join('');
+
+    // Risk heatmap as scatter
+    mk('chart-risk','scatter',{datasets:[{
+      label:'Risks',
+      data:[
+        {x:80,y:90,name:'CAC Inflation'},{x:50,y:80,name:'Gov Delay'},{x:75,y:60,name:'Competition'},
+        {x:50,y:55,name:'Engineering'},{x:50,y:45,name:'Regulatory'},{x:20,y:35,name:'Founder'},
+      ],
+      backgroundColor:GOLD,borderColor:GOLD,pointRadius:8,pointHoverRadius:12,
+    }]},{scales:{x:{title:{display:true,text:'Likelihood %',color:GREY},min:0,max:100,grid:{color:'#0E1E3640'},ticks:{callback:v=>`${v}%`}},y:{title:{display:true,text:'Impact %',color:GREY},min:0,max:100,grid:{color:'#0E1E3640'},ticks:{callback:v=>`${v}%`}}},plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:c=>`${c.raw.name}: ${c.raw.x}% × ${c.raw.y}%`}}}});
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════════════════════════════════════
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const loader=document.getElementById('loader');
+    loader.style.opacity='0';
+    setTimeout(()=>{loader.style.display='none';},1100);
+    render();
+  },2900);
+});
+</script>
+</body>
+</html>
