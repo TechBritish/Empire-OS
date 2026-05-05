@@ -1,81 +1,3 @@
-
-Claude finished the response
-You said: PROMPT FOR OPUS:
-
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"/> <meta name="viewport" content="width=device-width,initial-scale=1.0"/> <title>Empire OS — Sovereign Financial Engine · British AI Consulting</title> <link rel="preconnect" href="https://fonts.googleapis.com"/> <link rel="preconnect" hre
-
-pasted
-
-PROMPT FOR OPUS:
-Take the HTML file at empire-os.britishaiconsulting.info (live version). Add two input sliders at the top:
-
-Series Seed Funding (£500k-£3M, default £1.5M)
-Sovereign Fund (£0-£5M, default £0) All calculations cascade from those two inputs. Keep exact same design, colors, 12 tabs, everything else identical. Don't change anything. Just make the funding amounts adjustable.
-I LOVE THE ORIGINAL, just need the adjustments added so theres more variables.
-
-Show more
-15:01
-
-Architecting dynamic funding sliders cascading through calculations
-Architecting dynamic funding sliders cascading through calculations
-You said: finish
-finish
-
-19:10
-Claude responded: Done.
-
-Presented file
-Presented file
-Done. Two new sliders added in a dedicated blue-bordered panel above the existing operating sliders:
-
-Series Seed Funding: £500k to £3M (default £1.5M)
-Sovereign Fund: £0 to £5M (default £0)
-Total Raise display showing the combined sum
-Everything cascades from the total. Costs scale proportionally (a £2M raise = 40% of original cost base, so burn, runway, S&M, engineering all scale down). Cap table recalculates founder/investor splits dynamically against the £15M pre-money. Valuation tab shows MOIC against actual stake. Runway tab title and milestone allocations follow the total.
-
-Reset button restores everything including the funding sliders. Bear/Base/Bull and Stress Test leave funding untouched (only operational levers shift).
-
-
-Empire os
-Code · HTML 
-You said: ok to undetstand the profits and all othr margins work with the new sliders yeah?
-ok to undetstand the profits and all othr margins work with the new sliders yeah?
-
-19:10
-Claude responded: Yes.
-Yes. Here's how it cascades:
-
-Costs scale with funding. Original model had £4.5M in operating costs against £5M raise. New model takes your total funding (Seed + Sovereign) and scales every cost line proportionally. £1.5M total = costs run at 30% of the original. £3M total = 60%. £8M total (max) = 160%.
-
-This means:
-
-Smaller raise → lower S&M, lower engineering spend, lower burn → leaner OpEx → higher EBITDA margin (because revenue assumptions stay constant)
-Bigger raise → more spend → lower margin but more runway and faster scale capacity
-What stays constant (revenue side): customer count, ARPU, churn, GMV, gov data. Those are driven by the operating sliders (Growth, Churn, ARPU, GMV Fee) and GTM sliders. Funding only affects the cost base.
-
-What changes with funding:
-
-Runway months
-Monthly burn
-All OpEx lines (S&M, R&D, G&A, Infra)
-EBITDA and EBITDA margin (because OpEx moved)
-Burn Multiple, Magic Number, Rule of 40 (all reference cost base)
-Cap table % splits (against £15M pre-money)
-Investor MOIC (proceeds ÷ actual amount invested)
-Founder retained equity
-Watch this trade-off: at £500k raise the model looks profitable fast on paper, but the cost base is so small the company can't actually hit the customer counts the revenue side assumes. The model doesn't auto-link funding to GTM capacity, you have to use the GTM sliders (reps, leads, inbound) to match what your funding can actually buy. That's the honest gap.
-
-
-
-You've used 75% of your weekly limit
-Get more usage
-
-
-
-Claude is AI and can make mistakes. Please double-check responses.
-Empire os · HTML
-Copy
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,17 +23,17 @@ Copy
 html,body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;min-height:100vh;overflow-x:hidden;line-height:1.5;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at top,var(--blue-glow) 0%,transparent 60%),radial-gradient(ellipse at bottom right,var(--gold-glow) 0%,transparent 70%);pointer-events:none;z-index:0;}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;mix-blend-mode:overlay;}
- 
+
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px;}
- 
+
 /* TYPOGRAPHY */
 .display{font-family:'Playfair Display',Georgia,serif;}
 .italic{font-style:italic;}
 .mono{font-family:'Courier Prime',Courier,monospace;}
 .sc{font-variant:small-caps;letter-spacing:0.14em;font-size:0.65rem;font-weight:600;}
- 
+
 /* LOADER */
 #loader{position:fixed;inset:0;background:var(--bg-deep);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1.2s ease;}
 #loader::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,var(--gold-glow) 0%,transparent 50%);}
@@ -125,7 +47,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ldr-cap{margin-top:24px;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--grey);font-style:italic;opacity:0.6;position:relative;z-index:1;}
 @keyframes ldrfill{to{width:100%;}}
 @keyframes ldrmark{0%,100%{transform:scale(1);box-shadow:0 8px 32px rgba(200,160,32,0.4);}50%{transform:scale(1.05);box-shadow:0 12px 48px rgba(200,160,32,0.6);}}
- 
+
 /* HEADER */
 .header{background:linear-gradient(180deg,var(--navy-mid) 0%,var(--bg-card) 100%);border-bottom:1px solid var(--border-gold);position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
 .header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:18px 28px 12px;}
@@ -146,30 +68,30 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .scen-btn.bull.active{background:var(--green-lt);color:var(--navy);box-shadow:0 0 16px var(--green-glow);}
 .stress-btn{padding:7px 14px;font-size:9px;letter-spacing:3px;text-transform:uppercase;font-family:'Cormorant Garamond',serif;font-weight:700;cursor:pointer;border-radius:2px;background:transparent;color:var(--red-lt);border:1px solid var(--red-lt);transition:all 0.2s;flex-shrink:0;margin-left:8px;}
 .stress-btn:hover{background:var(--red);color:var(--white);box-shadow:0 0 20px rgba(184,50,50,0.4);}
- 
+
 .op-bar{padding:9px 28px;background:var(--bg-alt);border-top:1px solid var(--border);font-size:9px;letter-spacing:3px;color:var(--blue-ice);font-variant:small-caps;font-weight:600;display:flex;align-items:center;gap:12px;}
 .op-pulse{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:opulse 2s infinite;}
 @keyframes opulse{0%,100%{opacity:0.4;box-shadow:0 0 0 0 var(--gold-glow);}50%{opacity:1;box-shadow:0 0 0 6px transparent;}}
- 
+
 .gold-rule{height:1px;background:linear-gradient(90deg,transparent 0%,var(--gold-dim) 20%,var(--gold) 50%,var(--gold-dim) 80%,transparent 100%);}
- 
+
 .tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 28px;-webkit-overflow-scrolling:touch;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab-btn{padding:13px 14px;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;font-family:'Cormorant Garamond',serif;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--grey);border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:all 0.25s;}
 .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
 .tab-btn:hover:not(.active){color:var(--blue-ice);}
- 
+
 /* CONTENT */
 .content{padding:22px 28px;position:relative;z-index:1;}
 .tab-panel{display:none;animation:fadein 0.5s ease;}
 .tab-panel.active{display:block;}
 @keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
- 
+
 /* INSIGHT */
 .insight-stripe{background:linear-gradient(90deg,transparent,var(--bg-alt) 15%,var(--bg-alt) 85%,transparent);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:11px 28px;display:flex;align-items:center;gap:14px;margin-bottom:18px;}
 .insight-label{font-variant:small-caps;letter-spacing:3px;font-size:0.6rem;color:var(--gold);white-space:nowrap;flex-shrink:0;font-weight:700;}
 .insight-text{font-style:italic;font-size:13px;color:var(--blue-ice);line-height:1.45;}
- 
+
 /* SLIDER PANEL */
 .slider-panel{display:flex;gap:22px;flex-wrap:wrap;background:var(--bg-alt);border:1px solid var(--border-lt);border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin-bottom:18px;align-items:flex-end;}
 .slider-panel.funding{border-left:3px solid var(--blue);background:linear-gradient(180deg,var(--navy-mid) 0%,var(--bg-alt) 100%);}
@@ -188,14 +110,14 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .fund-total .ft-label{font-variant:small-caps;letter-spacing:2px;font-size:0.6rem;color:var(--gold);font-weight:700;display:block;margin-bottom:4px;}
 .fund-total .ft-val{font-family:'Playfair Display',serif;font-style:italic;font-size:26px;color:var(--gold);line-height:1;}
 .fund-total .ft-sub{font-size:10px;color:var(--grey);font-style:italic;margin-top:4px;}
- 
+
 /* CARDS */
 .card{background:var(--bg-card);border:1px solid var(--border-lt);border-radius:4px;padding:22px;margin-bottom:18px;backdrop-filter:blur(8px);}
 .card-gold{border-left:2px solid var(--gold);}
 .card-blue{border-left:2px solid var(--blue);}
 .card-green{border-left:2px solid var(--green-lt);}
 .card-red{border-left:2px solid var(--red);}
- 
+
 /* GRIDS */
 .metric-grid,.chart-grid{display:grid;gap:14px;margin-bottom:18px;}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -206,7 +128,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 @media(max-width:900px){.g5{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media(max-width:640px){.g4,.g5{grid-template-columns:repeat(2,minmax(0,1fr));}.g3{grid-template-columns:repeat(2,minmax(0,1fr));}.chart-grid.c2{grid-template-columns:1fr;}}
 @media(max-width:400px){.g2,.g3,.g4,.g5{grid-template-columns:1fr;}}
- 
+
 /* METRIC BOX */
 .mb{background:var(--bg-alt);border:1px solid var(--border-lt);border-radius:3px;padding:16px 14px;border-left:2px solid var(--gold-dim);position:relative;overflow:hidden;}
 .mb .ml{font-variant:small-caps;letter-spacing:0.12em;font-size:0.6rem;color:var(--grey);font-weight:600;margin-bottom:7px;display:block;}
@@ -219,13 +141,13 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .mb .pill{position:absolute;top:8px;right:8px;font-size:7px;letter-spacing:1.5px;padding:2px 6px;border-radius:2px;text-transform:uppercase;font-weight:700;}
 .pill-proven{background:rgba(46,125,82,0.2);color:var(--green-lt);border:1px solid var(--green-lt);}
 .pill-assumed{background:rgba(200,160,32,0.15);color:var(--gold);border:1px solid var(--gold-dim);}
- 
+
 /* SECTION LABEL */
 .sec-label{font-variant:small-caps;letter-spacing:0.18em;font-size:0.65rem;color:var(--grey);font-weight:600;margin-bottom:14px;display:block;border-bottom:1px solid var(--border);padding-bottom:8px;}
- 
+
 /* CHART */
 .chart-wrap{position:relative;width:100%;}
- 
+
 /* TABLE */
 .dt{width:100%;border-collapse:collapse;font-size:clamp(11px,2.4vw,13px);}
 .dt th{font-variant:small-caps;letter-spacing:0.12em;font-size:0.6rem;color:var(--grey);font-weight:600;padding:9px 12px;text-align:left;border-bottom:1px solid var(--gold-dim);white-space:nowrap;}
@@ -243,7 +165,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .tbs{overflow-x:auto;}
 .tbs::-webkit-scrollbar{height:3px;}
 .tbs::-webkit-scrollbar-thumb{background:var(--gold-dim);}
- 
+
 /* PROGRESS BARS */
 .pr{margin-bottom:13px;}
 .pr .ph{display:flex;justify-content:space-between;margin-bottom:5px;}
@@ -251,13 +173,13 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .pr .pv{font-family:'Courier Prime',monospace;font-size:0.75rem;color:var(--white);}
 .pb{background:var(--border-lt);border-radius:1px;height:4px;}
 .pf{height:4px;border-radius:1px;transition:width 0.6s ease;}
- 
+
 /* HEAT */
 .ht{width:100%;border-collapse:collapse;font-size:12px;}
 .ht th{padding:8px 12px;font-variant:small-caps;letter-spacing:0.1em;font-size:0.6rem;color:var(--grey);font-weight:600;border-bottom:1px solid var(--gold-dim);}
 .ht td{padding:10px 12px;text-align:center;font-family:'Courier Prime',monospace;font-size:12px;border-bottom:1px solid rgba(14,30,54,0.4);}
 .ht td.rl{text-align:left;color:var(--gold);font-weight:700;}
- 
+
 /* COMP */
 .comp{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);gap:10px;}
 .comp:last-child{border-bottom:none;}
@@ -268,14 +190,14 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .comp .cmx{text-align:right;}
 .comp .cmx .cl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-dk);display:block;}
 .comp .cmx .cv{font-family:'Courier Prime',monospace;color:var(--gold);font-size:13px;}
- 
+
 /* MOIC */
 .moic{background:var(--bg);border:1px solid var(--border-lt);border-radius:3px;padding:16px;margin-bottom:12px;}
 .moic p.ml2{font-style:italic;color:var(--grey);font-size:12px;margin-bottom:10px;}
 .moic .mr{display:flex;justify-content:space-between;}
 .moic .ms2 .ml3{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-dk);display:block;margin-bottom:3px;}
 .moic .ms2 .mv2{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;}
- 
+
 /* MILESTONE */
 .mile{display:grid;grid-template-columns:1fr 80px 80px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
 @media(max-width:640px){.mile{grid-template-columns:1fr 1fr;gap:6px;}}
@@ -284,14 +206,14 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .mile .mc{font-family:'Courier Prime',monospace;font-size:11px;color:var(--red-lt);}
 .mile .mo{font-size:12px;color:var(--grey);font-style:italic;}
 .mile .mk{font-family:'Courier Prime',monospace;font-size:11px;color:var(--gold);text-align:right;}
- 
+
 /* FUNNEL */
 .fr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
 .fr .fl{font-size:12px;color:var(--grey);font-style:italic;}
 .fr .fr2{text-align:right;}
 .fr .fv{font-family:'Courier Prime',monospace;font-size:14px;color:var(--white);}
 .fr .fp{font-size:10px;color:var(--grey-dk);}
- 
+
 /* SEG */
 .seg{background:var(--bg-alt);border:1px solid var(--border-lt);border-radius:4px;padding:18px;}
 .seg h3{font-family:'Playfair Display',serif;font-weight:600;font-size:14px;color:var(--gold);letter-spacing:0.05em;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--gold-dim);}
@@ -299,7 +221,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .sm{background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:10px;}
 .sm .sl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-dk);display:block;margin-bottom:4px;}
 .sm .sv2{font-family:'Courier Prime',monospace;font-size:15px;}
- 
+
 /* RISK ROWS */
 .risk{background:var(--bg-card);border:1px solid var(--border-lt);border-left:3px solid var(--red);border-radius:3px;padding:14px 16px;margin-bottom:10px;}
 .risk.medium{border-left-color:var(--gold);}
@@ -308,13 +230,13 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .risk .rmeta{display:flex;gap:14px;margin-bottom:8px;font-size:10px;color:var(--grey);}
 .risk .rmeta span strong{color:var(--gold);}
 .risk .rmit{font-size:12px;color:var(--blue-ice);font-style:italic;line-height:1.5;}
- 
+
 /* CAP TABLE */
 .cap-row{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:12px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);}
 .cap-row.hdr{font-variant:small-caps;letter-spacing:2px;font-size:0.6rem;color:var(--grey);font-weight:700;border-bottom:1px solid var(--gold-dim);}
 .cap-row .cn2{font-family:'Playfair Display',serif;color:var(--white);font-style:italic;}
 .cap-row .cv2{font-family:'Courier Prime',monospace;font-size:13px;}
- 
+
 /* FOOTER */
 .footer{border-top:1px solid var(--border-lt);padding:18px 28px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:20px;background:var(--bg-deep);}
 .footer p{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-dk);}
@@ -323,7 +245,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 </style>
 </head>
 <body>
- 
+
 <div id="loader">
   <div class="ldr-mark"><span>E</span></div>
   <div class="ldr-logo">EMPIRE <em>OS</em></div>
@@ -331,7 +253,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
   <div class="ldr-bar"><div class="ldr-fill"></div></div>
   <div class="ldr-cap">Calculating Sovereign Trajectories…</div>
 </div>
- 
+
 <div class="header">
   <div class="header-top">
     <div class="header-brand">
@@ -369,9 +291,9 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
     <button class="tab-btn" data-tab="risk">Risk Register</button>
   </div>
 </div>
- 
+
 <div class="content">
- 
+
   <!-- FUNDING CONFIGURATION PANEL -->
   <div class="slider-panel funding">
     <div class="slider-item">
@@ -388,7 +310,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       <div class="ft-sub">All calculations cascade from this combined total</div>
     </div>
   </div>
- 
+
   <!-- OPERATING SLIDERS PANEL -->
   <div class="slider-panel">
     <div class="slider-item">
@@ -409,12 +331,12 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
     </div>
     <button class="slider-reset" onclick="resetSliders()">Reset</button>
   </div>
- 
+
   <div class="insight-stripe">
     <span class="insight-label">Live Insight</span>
     <span class="insight-text" id="insight-text">SaaS subscription + transactional GMV layers create a compounding valuation floor unavailable to single-revenue-stream competitors.</span>
   </div>
- 
+
   <!-- ═══════════════════ EXECUTIVE SUMMARY ═══════════════════ -->
   <div id="tab-summary" class="tab-panel active">
     <div class="metric-grid g4">
@@ -442,11 +364,11 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       </div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ GTM ENGINE ═══════════════════ -->
   <div id="tab-gtm" class="tab-panel">
     <p class="sec-label" style="border:none;">Sales Activity → Customer Acquisition · The bottom-up GTM mechanics that produce the Year 1 company count.</p>
- 
+
     <div class="slider-panel" style="border-left-color:var(--blue);">
       <div class="slider-item">
         <div class="sh"><label>Sales Reps</label><span class="sv" id="repsVal">5</span></div>
@@ -465,26 +387,26 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
         <input type="range" min="0" max="2000" step="25" value="200" oninput="updateInbound(this.value)">
       </div>
     </div>
- 
+
     <div class="metric-grid g4">
       <div class="mb gold"><span class="ml">Outbound Customers / Mo</span><div class="mv" id="gtm-outbound"></div><div class="ms">Reps × Leads × Win Rate</div></div>
       <div class="mb blue"><span class="ml">Inbound Customers / Mo</span><div class="mv" id="gtm-inbound"></div><div class="ms">Inbound Leads × 8% conv.</div></div>
       <div class="mb green"><span class="ml">Total New / Mo</span><div class="mv" id="gtm-total"></div><div class="ms">Combined channel velocity</div></div>
       <div class="mb gold"><span class="ml">Year 1 Customers (GTM)</span><div class="mv" id="gtm-y1"></div><div class="ms" id="gtm-y1-status"></div></div>
     </div>
- 
+
     <div class="metric-grid g4">
       <div class="mb red"><span class="ml">Blended CAC</span><div class="mv" id="gtm-cac"></div><div class="ms">Cost per acquired customer</div></div>
       <div class="mb green"><span class="ml">CAC Payback</span><div class="mv" id="gtm-payback"></div><div class="ms">Months at gross margin</div></div>
       <div class="mb blue"><span class="ml">S&amp;M Burn / Mo</span><div class="mv" id="gtm-sm"></div><div class="ms">Rep cost + program spend</div></div>
       <div class="mb gold"><span class="ml">Magic Number</span><div class="mv" id="gtm-magic"></div><div class="ms">Sales efficiency · &gt;0.75 elite</div></div>
     </div>
- 
+
     <div class="chart-grid c2">
       <div class="card card-blue"><span class="sec-label">Channel Mix · Outbound vs Inbound</span><div class="chart-wrap"><canvas id="chart-channels" height="220"></canvas></div></div>
       <div class="card card-gold"><span class="sec-label">Customer Acquisition Trajectory</span><div class="chart-wrap"><canvas id="chart-acquisition" height="220"></canvas></div></div>
     </div>
- 
+
     <div class="card">
       <span class="sec-label">GTM Funnel Mathematics</span>
       <div class="tbs"><table class="dt"><thead><tr>
@@ -492,7 +414,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       </tr></thead><tbody id="gtm-funnel-table"></tbody></table></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ P&L ═══════════════════ -->
   <div id="tab-pl" class="tab-panel">
     <div class="card">
@@ -509,7 +431,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       <div class="card"><span class="sec-label">EBITDA Bridge</span><div class="chart-wrap"><canvas id="chart-ebitda" height="220"></canvas></div></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ UNIT ═══════════════════ -->
   <div id="tab-unit" class="tab-panel">
     <div class="metric-grid g3" id="unit-segs"></div>
@@ -522,7 +444,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       <div class="chart-wrap"><canvas id="chart-payback" height="180"></canvas></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ MRR ═══════════════════ -->
   <div id="tab-mrr" class="tab-panel">
     <div class="metric-grid g4">
@@ -540,38 +462,38 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       </tr></thead><tbody id="mrr-table"></tbody></table></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ SAAS METRICS ═══════════════════ -->
   <div id="tab-metrics" class="tab-panel">
     <p class="sec-label" style="border:none;">Institutional-grade SaaS performance indicators benchmarked against top-quartile industry standards.</p>
- 
+
     <div class="metric-grid g4">
       <div class="mb gold"><span class="ml">Rule of 40</span><div class="mv" id="m-r40"></div><div class="ms" id="m-r40-status">Growth % + EBITDA % · &gt;40 elite</div></div>
       <div class="mb blue"><span class="ml">Burn Multiple</span><div class="mv" id="m-burn-mult"></div><div class="ms" id="m-burn-status">Net Burn / Net New ARR · &lt;1 elite</div></div>
       <div class="mb green"><span class="ml">Magic Number</span><div class="mv" id="m-magic"></div><div class="ms" id="m-magic-status">Net New ARR / S&amp;M · &gt;0.75 elite</div></div>
       <div class="mb gold"><span class="ml">Quick Ratio</span><div class="mv" id="m-quick"></div><div class="ms" id="m-quick-status">(New+Exp)/(Churn+Contraction) · &gt;4 elite</div></div>
     </div>
- 
+
     <div class="metric-grid g4">
       <div class="mb"><span class="ml">CAC Recovery</span><div class="mv" id="m-cac-rec"></div><div class="ms">Avg payback period</div></div>
       <div class="mb"><span class="ml">LTV : CAC Blended</span><div class="mv" id="m-ltv-cac"></div><div class="ms">Weighted by segment mix</div></div>
       <div class="mb"><span class="ml">Net Dollar Retention</span><div class="mv" id="m-ndr"></div><div class="ms">Includes expansion offset</div></div>
       <div class="mb"><span class="ml">Gross Dollar Retention</span><div class="mv" id="m-gdr"></div><div class="ms">Pure churn-only metric</div></div>
     </div>
- 
+
     <div class="card">
       <span class="sec-label">SaaS Performance Benchmarks vs Empire OS</span>
       <div class="tbs"><table class="dt"><thead><tr>
         <th>Metric</th><th class="r">Below Avg</th><th class="r">Average</th><th class="r">Top Quartile</th><th class="r">Elite</th><th class="r">Empire OS</th>
       </tr></thead><tbody id="bench-table"></tbody></table></div>
     </div>
- 
+
     <div class="chart-grid c2">
       <div class="card"><span class="sec-label">Rule of 40 Trajectory</span><div class="chart-wrap"><canvas id="chart-r40" height="220"></canvas></div></div>
       <div class="card"><span class="sec-label">Burn Multiple Evolution</span><div class="chart-wrap"><canvas id="chart-burn" height="220"></canvas></div></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ MARKET ═══════════════════ -->
   <div id="tab-market" class="tab-panel">
     <div class="metric-grid g3">
@@ -590,7 +512,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       </div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ RUNWAY ═══════════════════ -->
   <div id="tab-runway" class="tab-panel">
     <div class="metric-grid g4">
@@ -615,7 +537,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       <div class="chart-wrap"><canvas id="chart-pathprofit" height="220"></canvas></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ SENSITIVITY ═══════════════════ -->
   <div id="tab-sensitivity" class="tab-panel">
     <div class="card">
@@ -632,7 +554,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       <div class="chart-wrap"><canvas id="chart-tornado" height="240"></canvas></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ VALUATION ═══════════════════ -->
   <div id="tab-valuation" class="tab-panel">
     <div class="metric-grid g4">
@@ -654,7 +576,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       <div id="exits-rows"></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ CAP TABLE ═══════════════════ -->
   <div id="tab-captable" class="tab-panel">
     <div class="metric-grid g4">
@@ -663,7 +585,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       <div class="mb blue"><span class="ml">Investor Stake</span><div class="mv" id="cap-stake"></div><div class="ms">Series Seed</div></div>
       <div class="mb green"><span class="ml">Founder Retained</span><div class="mv" id="cap-founder"></div><div class="ms">Pre-Series A</div></div>
     </div>
- 
+
     <div class="card">
       <span class="sec-label">Cap Table · Post Series Seed</span>
       <div class="cap-row hdr">
@@ -671,12 +593,12 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       </div>
       <div id="captable-rows"></div>
     </div>
- 
+
     <div class="card">
       <span class="sec-label">Dilution Waterfall · Through Series B</span>
       <div class="chart-wrap"><canvas id="chart-dilution" height="240"></canvas></div>
     </div>
- 
+
     <div class="card">
       <span class="sec-label">Founder Equity Value at Different Exits</span>
       <div class="tbs"><table class="dt"><thead><tr>
@@ -684,17 +606,17 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       </tr></thead><tbody id="exit-table"></tbody></table></div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════ RISK ═══════════════════ -->
   <div id="tab-risk" class="tab-panel">
     <p class="sec-label" style="border:none;">Top operational, market, and execution risks with quantified impact and active mitigation strategies.</p>
     <div id="risk-list"></div>
- 
+
     <div class="card">
       <span class="sec-label">Risk Heatmap · Likelihood × Impact</span>
       <div class="chart-wrap"><canvas id="chart-risk" height="240"></canvas></div>
     </div>
- 
+
     <div class="card card-gold">
       <span class="sec-label">Concentration Risk Metrics</span>
       <div class="metric-grid g3" style="margin-bottom:0;">
@@ -704,14 +626,14 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       </div>
     </div>
   </div>
- 
+
 </div>
- 
+
 <div class="footer">
   <p>British AI Consulting · Empire OS · Sovereign Financial Engine · Confidential 2026</p>
   <em class="quote">To be good is the only way.</em>
 </div>
- 
+
 <script>
 // ═══════════════════════════════════════════════════════════════════════════════
 // CORE ASSUMPTIONS
@@ -734,31 +656,31 @@ const A={
   // GTM
   repCost:6000,inboundConv:0.08,programSpend:25000,
 };
- 
+
 const SC={
   bear:{label:'Bear',color:'#B83232',y1:1200,g:[1,1.8,2.5],gov:0.6},
   base:{label:'Base',color:'#C8A020',y1:5000,g:[1,3.0,3.2],gov:1.0},
   bull:{label:'Bull',color:'#3AA068',y1:10000,g:[1,3.5,4.0],gov:1.6},
 };
- 
+
 const PRESETS={
   bear:{growth:1.8,churn:1.8,arpu:0.85,gmvFee:0.3,reps:3,leads:30,win:8,inbound:80},
   base:{growth:3.0,churn:1.0,arpu:1.0,gmvFee:0.5,reps:5,leads:40,win:15,inbound:200},
   bull:{growth:4.5,churn:0.7,arpu:1.3,gmvFee:0.8,reps:10,leads:60,win:22,inbound:600},
 };
- 
+
 const INSIGHTS={
   bear:'Downside protection: Government data licensing provides a non-dilutive revenue backstop independent of platform growth rate.',
   base:'Efficiency peak: LTV:CAC and Net Margins align with top-quartile SaaS benchmarks. GMV layer compounds silently.',
   bull:'Hyper-scale: Transactional fees begin to dominate the revenue mix, shifting the valuation conversation toward Fintech multiples.',
 };
- 
+
 let scenario='base',activeTab='summary';
 let growthOverride=null,churnMult=1,arpuMult=1,gmvFeeMult=1;
 let reps=5,leadsPerRep=40,winRate=0.15,inboundLeads=200;
 let seedFund=1500000,sovereignFund=0;
 const charts={};
- 
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // FUNDING HELPERS
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -773,7 +695,7 @@ const burnMoAdj=()=>totalCostsAdj()/12;
 const postMoney=()=>A.preMoney+totalFund();
 const investorStake=()=>totalFund()/postMoney();
 const founderStake=()=>1-investorStake();
- 
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // FORMATTERS
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -788,7 +710,7 @@ const fmt=(n,d=1)=>{
 const fmtN=n=>n>=1e6?`${(n/1e6).toFixed(1)}M`:n>=1e3?`${(n/1e3).toFixed(0)}k`:n?.toLocaleString();
 const fmtP=n=>`${(n*100).toFixed(1)}%`;
 const fmtX=n=>`${n.toFixed(1)}×`;
- 
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // MODEL
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -798,7 +720,7 @@ function txn(cos){
   const fee=A.pfr*gmvFeeMult;
   return{gmv,pf:gmv*fee,pt:cos*A.tpcy*A.ptf,cf:gmv*A.cpct*A.cfr,total:gmv*fee+cos*A.tpcy*A.ptf+gmv*A.cpct*A.cfr};
 }
- 
+
 function model(sc){
   const{y1,g,gov}=SC[sc];
   const g1=growthOverride||g[1];
@@ -822,7 +744,7 @@ function model(sc){
     return{yr,c,s,m,e,sub,setup,txnTotal:t.total,txnPF:t.pf,txnPT:t.pt,txnCF:t.cf,gmv:t.gmv,govR,total,cogs,gp,gm:gp/total,smE,rdE,gaE,infE,opex,ebitda,em:ebitda/total,mrr:sub/12,arr:sub,arpu:Math.round(sub/c/12),nrr,bc};
   });
 }
- 
+
 function quarterly(sc){
   const{y1,g}=SC[sc];
   const g1=growthOverride||g[1];
@@ -842,20 +764,20 @@ function quarterly(sc){
   }
   return out;
 }
- 
+
 function sensitivity(sc){
   const{y1}=SC[sc];
   const gs=[2.0,2.5,3.0,3.5,4.0],cs=[1,2,3,4,5];
   const arpu=(A.mx*A.startupPrice+A.ms*A.smePrice*A.smeAvgSeats+A.me*A.entPrice*A.entAvgSeats)*arpuMult;
   return gs.map(g=>({g,vals:cs.map(c=>{const y3=Math.round(y1*g*g);return Math.round(y3*arpu*12*(1-c/100)/1e6);})}));
 }
- 
+
 function ltv(seg){
   const ch={s:A.cs,m:A.csm,e:A.ce}[seg]*churnMult;
   const ar={s:A.startupPrice,m:A.smePrice*A.smeAvgSeats,e:A.entPrice*A.entAvgSeats}[seg]*arpuMult;
   return ar*A.gm/ch;
 }
- 
+
 // GTM
 function gtmCalc(){
   const outboundPerMo=Math.round(reps*leadsPerRep*winRate);
@@ -870,7 +792,7 @@ function gtmCalc(){
   const magic=newARRPerMo/(smBurn*12);
   return{outboundPerMo,inboundPerMo,totalPerMo,y1,smBurn,cac,payback,magic,blendedArpu};
 }
- 
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // CHART HELPERS
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -878,17 +800,17 @@ Chart.defaults.color='#7A8899';
 Chart.defaults.borderColor='#0E1E36';
 Chart.defaults.font.family="'Cormorant Garamond',Georgia,serif";
 Chart.defaults.font.size=11;
- 
+
 const GOLD='#C8A020',BLUE='#3A8CC4',GREEN='#2E7D52',GREEN_LT='#3AA068',RED='#B83232',GOLD_DIM='#7A6018',GREY='#3D4B5C',BLUE_LT='#5AA8D8';
 const tt={backgroundColor:'#060F1F',borderColor:GOLD,borderWidth:1,titleColor:GOLD,bodyColor:'#EEF2F8',titleFont:{family:"'Playfair Display',serif",style:'italic',size:13},bodyFont:{family:"'Courier Prime',monospace",size:12},padding:12,cornerRadius:2};
- 
+
 function mk(id,type,data,opts={}){
   const el=document.getElementById(id);
   if(!el)return;
   if(charts[id])charts[id].destroy();
   charts[id]=new Chart(el,{type,data,options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{boxWidth:10,usePointStyle:true,pointStyle:'circle'}},tooltip:tt},...opts}});
 }
- 
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // CONTROL HANDLERS
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -904,17 +826,17 @@ function updateSovereign(v){
   document.getElementById('totalFundVal').textContent=fmt(totalFund(),1);
   render();
 }
- 
+
 function updateGrowth(v){growthOverride=parseFloat(v);document.getElementById('growthVal').textContent=`${parseFloat(v).toFixed(1)}×`;render();}
 function updateChurn(v){churnMult=parseFloat(v);document.getElementById('churnVal').textContent=`${parseFloat(v).toFixed(2)}×`;render();}
 function updateARPU(v){arpuMult=parseFloat(v);document.getElementById('arpuVal').textContent=`${parseFloat(v).toFixed(2)}×`;render();}
 function updateGMV(v){gmvFeeMult=parseFloat(v)/0.5;document.getElementById('gmvVal').textContent=`${parseFloat(v).toFixed(2)}%`;render();}
- 
+
 function updateReps(v){reps=parseInt(v);document.getElementById('repsVal').textContent=v;render();}
 function updateLeads(v){leadsPerRep=parseInt(v);document.getElementById('leadsVal').textContent=v;render();}
 function updateWin(v){winRate=parseInt(v)/100;document.getElementById('winVal').textContent=`${v}%`;render();}
 function updateInbound(v){inboundLeads=parseInt(v);document.getElementById('inbVal').textContent=v;render();}
- 
+
 function resetSliders(){
   growthOverride=null;churnMult=1;arpuMult=1;gmvFeeMult=1;
   reps=5;leadsPerRep=40;winRate=0.15;inboundLeads=200;
@@ -938,7 +860,7 @@ function resetSliders(){
   document.getElementById('inbVal').textContent='200';
   render();
 }
- 
+
 function triggerStress(){
   document.body.style.transition='background 0.18s';document.body.style.background='#1a0507';
   setTimeout(()=>{document.body.style.background='';},220);
@@ -960,7 +882,7 @@ function triggerStress(){
   document.getElementById('insight-text').textContent='Stress Test Active. Worst case: 2.5× churn, 1.5× growth, 0.8× ARPU, weakened GTM. Model remains structurally solvent through government data floor.';
   render();
 }
- 
+
 function setScenario(s){
   scenario=s;
   document.querySelectorAll('.scen-btn').forEach(b=>b.classList.remove('active'));
@@ -986,7 +908,7 @@ function setScenario(s){
   document.getElementById('insight-text').textContent=INSIGHTS[s]||INSIGHTS.base;
   render();
 }
- 
+
 function setTab(id){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -995,11 +917,11 @@ function setTab(id){
   activeTab=id;
   render();
 }
- 
+
 document.querySelectorAll('.tab-btn').forEach(b=>{
   b.addEventListener('click',function(){setTab(this.dataset.tab);});
 });
- 
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // RENDER
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1012,7 +934,7 @@ function render(){
   const stake=investorStake();
   const founder=founderStake();
   const post=postMoney();
- 
+
   // SUMMARY
   if(activeTab==='summary'){
     document.getElementById('s-y1arr').textContent=fmt(M[0].arr);
@@ -1026,14 +948,14 @@ function render(){
     document.getElementById('s-nrr-sub').textContent=M[0].nrr>1?'>100% expanding':'<100% contracting';
     document.getElementById('s-nrr-box').className='mb '+(M[0].nrr>1?'green':'red');
     document.getElementById('s-runway').textContent=`${Math.round(runway)} mo`;
- 
+
     mk('chart-revenue','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
       {label:'Subscriptions',data:M.map(m=>m.sub),borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,tension:0.4,borderWidth:2,pointBackgroundColor:GOLD},
       {label:'Transaction Fees',data:M.map(m=>m.txnTotal),borderColor:BLUE,backgroundColor:BLUE+'18',fill:true,tension:0.4,borderWidth:2,pointBackgroundColor:BLUE},
       {label:'Government Data',data:M.map(m=>m.govR),borderColor:GREEN_LT,backgroundColor:GREEN_LT+'15',fill:true,tension:0.4,borderWidth:1.5,pointBackgroundColor:GREEN_LT},
       {label:'Setup Fees',data:M.map(m=>m.setup),borderColor:GOLD_DIM,backgroundColor:GOLD_DIM+'15',fill:true,tension:0.4,borderWidth:1.5,pointBackgroundColor:GOLD_DIM},
     ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
- 
+
     const rows=[
       {l:'Companies on Platform',v:M.map(m=>fmtN(m.c)),cagr:fmtP(Math.pow(M[2].c/M[0].c,0.5)-1)},
       {l:'MRR',v:M.map(m=>fmt(m.mrr)),cagr:fmtP(Math.pow(M[2].mrr/M[0].mrr,0.5)-1)},
@@ -1054,7 +976,7 @@ function render(){
       return`<tr class="${r.hl?'hl':''}"><td>${r.l}</td>${r.v.map(v=>`<td class="r ${vc(v)}">${v}</td>`).join('')}<td class="r" style="color:var(--grey-dk);font-family:'Courier Prime',monospace;font-size:11px;">${r.cagr}</td></tr>`;
     }).join('');
   }
- 
+
   // GTM ENGINE
   if(activeTab==='gtm'){
     document.getElementById('gtm-outbound').textContent=G.outboundPerMo;
@@ -1066,17 +988,17 @@ function render(){
     const status=gap>=0?`✓ Exceeds Y1 target by ${fmtN(gap)}`:`Gap to target: ${fmtN(Math.abs(gap))} customers`;
     document.getElementById('gtm-y1-status').textContent=status;
     document.getElementById('gtm-y1-status').style.color=gap>=0?'var(--green-lt)':'var(--red-lt)';
- 
+
     document.getElementById('gtm-cac').textContent=fmt(G.cac);
     document.getElementById('gtm-payback').textContent=`${G.payback.toFixed(1)} mo`;
     document.getElementById('gtm-sm').textContent=fmt(G.smBurn);
     document.getElementById('gtm-magic').textContent=G.magic.toFixed(2);
- 
+
     mk('chart-channels','doughnut',{
       labels:['Outbound','Inbound'],
       datasets:[{data:[G.outboundPerMo,G.inboundPerMo],backgroundColor:[GOLD,BLUE],borderColor:'#060F1F',borderWidth:2}]
     },{cutout:'65%',plugins:{legend:{position:'bottom'}}});
- 
+
     const acqMonths=[];let cum=0;
     for(let i=1;i<=24;i++){cum+=G.totalPerMo;acqMonths.push({m:`M${i}`,cum,monthly:G.totalPerMo});}
     mk('chart-acquisition','line',{
@@ -1086,7 +1008,7 @@ function render(){
         {label:'Target Y1',data:Array(24).fill(target),borderColor:GREEN_LT,borderDash:[4,4],borderWidth:1.5,pointRadius:0,backgroundColor:'transparent'},
       ]
     },{scales:{y:{ticks:{callback:v=>v.toLocaleString()},grid:{color:'#0E1E3640'}},x:{ticks:{maxTicksLimit:8},grid:{color:'#0E1E3640'}}}});
- 
+
     document.getElementById('gtm-funnel-table').innerHTML=[
       ['Sales Reps Active',`${reps}`,'—',`${reps}`,`${reps}`],
       ['Outbound Leads Generated',`${reps*leadsPerRep}`,'100%',`${reps*leadsPerRep}`,`${(reps*leadsPerRep*12).toLocaleString()}`],
@@ -1097,7 +1019,7 @@ function render(){
       ['Total New Customers','—','—',`${G.totalPerMo}`,`${G.y1.toLocaleString()}`],
     ].map(r=>`<tr><td>${r[0]}</td><td class="r val">${r[1]}</td><td class="r blue">${r[2]}</td><td class="r gold">${r[3]}</td><td class="r gold" style="font-weight:700">${r[4]}</td></tr>`).join('');
   }
- 
+
   // P&L
   if(activeTab==='pl'){
     const pnl=[
@@ -1139,21 +1061,21 @@ function render(){
       const vc=v=>{if(r.profit)return v<0?'red':'green';if(r.gold)return'gold';return'val';};
       return`<tr class="${r.gold?'hl':''}"><td style="padding-left:${r.indent?'28px':'12px'};color:${r.gold?'var(--gold)':r.bold?'var(--white)':'var(--grey)'};font-weight:${r.bold?600:400};">${r.l}</td>${M.map((m,i)=>{const v=r.pct?r.pct[i]:r.v[i];const pct=r.pct?'':fmtP(Math.abs(r.v[i]/m.total));return`<td class="r ${vc(v)}">${r.pct?fmtP(v):fmt(v)}</td><td class="r" style="color:var(--grey-dk);font-size:10px;font-family:'Courier Prime',monospace;">${pct}</td>`;}).join('')}</tr>`;
     }).join('');
- 
+
     mk('chart-mix','bar',{labels:['Year 1','Year 2','Year 3'],datasets:[
       {label:'Subscriptions',data:M.map(m=>Math.round(m.sub/m.total*100)),backgroundColor:GOLD,stack:'a'},
       {label:'Setup',data:M.map(m=>Math.round(m.setup/m.total*100)),backgroundColor:GOLD_DIM,stack:'a'},
       {label:'Transactions',data:M.map(m=>Math.round(m.txnTotal/m.total*100)),backgroundColor:BLUE,stack:'a'},
       {label:'Gov Data',data:M.map(m=>Math.round(m.govR/m.total*100)),backgroundColor:GREEN_LT,stack:'a'},
     ]},{scales:{y:{ticks:{callback:v=>`${v}%`},stacked:true,grid:{color:'#0E1E3640'}},x:{stacked:true,grid:{color:'#0E1E3640'}}}});
- 
+
     mk('chart-ebitda','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
       {label:'Gross Profit',data:M.map(m=>m.gp),borderColor:GOLD,backgroundColor:'transparent',borderWidth:2,tension:0.4,pointBackgroundColor:GOLD},
       {label:'OpEx',data:M.map(m=>m.opex),borderColor:RED,backgroundColor:'transparent',borderWidth:2,tension:0.4,pointBackgroundColor:RED},
       {label:'EBITDA',data:M.map(m=>m.ebitda),borderColor:GREEN_LT,backgroundColor:GREEN_LT+'15',fill:true,borderWidth:2.5,tension:0.4,pointBackgroundColor:GREEN_LT},
     ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
   }
- 
+
   // UNIT
   if(activeTab==='unit'){
     const segs=[{k:'s',label:'Startup',price:A.startupPrice*arpuMult,ch:A.cs*churnMult},{k:'m',label:'SME',price:A.smePrice*A.smeAvgSeats*arpuMult,ch:A.csm*churnMult},{k:'e',label:'Enterprise',price:A.entPrice*A.entAvgSeats*arpuMult,ch:A.ce*churnMult}];
@@ -1170,39 +1092,39 @@ function render(){
         <div class="sm"><span class="sl">Ann Churn</span><span class="sv2" style="color:var(--grey);">${fmtP(1-Math.pow(1-s.ch,12))}</span></div>
       </div></div>`;
     }).join('');
- 
+
     mk('chart-ltvcac','bar',{labels:['Startup','SME','Enterprise'],datasets:[
       {label:'LTV',data:segs.map(s=>Math.round(ltv(s.k))),backgroundColor:GOLD},
       {label:'CAC',data:segs.map(s=>A.cac[s.k]),backgroundColor:BLUE+'90'},
     ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
- 
+
     const cohort=Array.from({length:24},(_,i)=>({x:i+1,logo:Math.round(Math.pow(1-A.cs*churnMult,i)*100),rev:Math.round(Math.pow(1-A.cs*churnMult,i)*(1+A.es*i*0.5)*100)}));
     mk('chart-cohort','line',{labels:cohort.map(c=>`M${c.x}`),datasets:[
       {label:'Logo Retention %',data:cohort.map(c=>c.logo),borderColor:GREY,backgroundColor:'transparent',borderWidth:1.5,tension:0.4,pointRadius:0},
       {label:'Revenue Retention %',data:cohort.map(c=>c.rev),borderColor:GOLD,backgroundColor:GOLD+'15',fill:true,borderWidth:2,tension:0.4,pointRadius:0},
     ]},{scales:{y:{ticks:{callback:v=>`${v}%`},grid:{color:'#0E1E3640'}},x:{ticks:{maxTicksLimit:8},grid:{color:'#0E1E3640'}}}});
- 
+
     mk('chart-payback','bar',{labels:['Startup','SME','Enterprise'],datasets:[{label:'CAC Payback (months)',data:segs.map(s=>Math.round(A.cac[s.k]/(s.price*A.gm))),backgroundColor:[GOLD,BLUE,GREEN_LT]}]},{indexAxis:'y',scales:{x:{ticks:{callback:v=>`${v}mo`},grid:{color:'#0E1E3640'}},y:{grid:{color:'#0E1E3640'}}}});
   }
- 
+
   // MRR
   if(activeTab==='mrr'){
     document.getElementById('mrr-y1').textContent=fmt(Q[3]?.end);
     document.getElementById('mrr-y2').textContent=fmt(Q[7]?.end);
     document.getElementById('mrr-y3').textContent=fmt(Q[11]?.end);
     document.getElementById('mrr-peak').textContent=fmt(Math.max(...Q.map(q=>q.net)));
- 
+
     mk('chart-waterfall','bar',{labels:Q.map(q=>q.label),datasets:[
       {label:'New MRR',data:Q.map(q=>q.newMRR),backgroundColor:GOLD+'CC',stack:'a'},
       {label:'Expansion',data:Q.map(q=>q.expMRR),backgroundColor:GREEN_LT+'CC',stack:'a'},
       {label:'Churned',data:Q.map(q=>q.chMRR),backgroundColor:RED+'CC',stack:'a'},
     ]},{scales:{y:{ticks:{callback:fmt},stacked:true,grid:{color:'#0E1E3640'}},x:{stacked:true,grid:{color:'#0E1E3640'}}}});
- 
+
     mk('chart-mrrline','line',{labels:Q.map(q=>q.label),datasets:[{label:'Ending MRR',data:Q.map(q=>q.end),borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,tension:0.4,borderWidth:2.5,pointRadius:2,pointBackgroundColor:GOLD}]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
- 
+
     document.getElementById('mrr-table').innerHTML=Q.map((q,i)=>`<tr style="background:${i%4===3?'rgba(200,160,32,0.04)':'transparent'}"><td class="val">${q.label}</td><td class="r val">${q.cos?.toLocaleString()}</td><td class="r gold">${fmt(q.newMRR)}</td><td class="r green">${fmt(q.expMRR)}</td><td class="r red">${fmt(Math.abs(q.chMRR))}</td><td class="r ${q.net>0?'green':'red'}" style="font-weight:700">${fmt(q.net)}</td><td class="r gold" style="font-weight:700">${fmt(q.end)}</td></tr>`).join('');
   }
- 
+
   // SAAS METRICS
   if(activeTab==='metrics'){
     const growth=(M[1].total-M[0].total)/M[0].total;
@@ -1210,31 +1132,31 @@ function render(){
     document.getElementById('m-r40').textContent=`${r40.toFixed(0)}`;
     document.getElementById('m-r40').style.color=r40>40?'var(--green-lt)':r40>20?'var(--gold)':'var(--red-lt)';
     document.getElementById('m-r40-status').textContent=r40>40?'Elite tier ✓':r40>20?'Healthy':'Below benchmark';
- 
+
     const netNewARR=M[1].arr-M[0].arr;
     const netBurn=Math.max(0,M[0].opex-M[0].gp);
     const burnMult=netBurn/netNewARR;
     document.getElementById('m-burn-mult').textContent=burnMult.toFixed(2);
     document.getElementById('m-burn-mult').style.color=burnMult<1?'var(--green-lt)':burnMult<2?'var(--gold)':'var(--red-lt)';
     document.getElementById('m-burn-status').textContent=burnMult<1?'Elite tier ✓':burnMult<2?'Strong':'Inefficient';
- 
+
     const magic=netNewARR/M[0].smE;
     document.getElementById('m-magic').textContent=magic.toFixed(2);
     document.getElementById('m-magic').style.color=magic>0.75?'var(--green-lt)':magic>0.5?'var(--gold)':'var(--red-lt)';
     document.getElementById('m-magic-status').textContent=magic>0.75?'Elite tier ✓':magic>0.5?'Healthy':'Below benchmark';
- 
+
     const qr=(Q[3].newMRR+Q[3].expMRR)/Math.abs(Q[3].chMRR);
     document.getElementById('m-quick').textContent=qr.toFixed(1);
     document.getElementById('m-quick').style.color=qr>4?'var(--green-lt)':qr>2?'var(--gold)':'var(--red-lt)';
     document.getElementById('m-quick-status').textContent=qr>4?'Elite tier ✓':qr>2?'Healthy':'Concerning';
- 
+
     const blendedCAC=A.mx*A.cac.s+A.ms*A.cac.m+A.me*A.cac.e;
     const blendedLTV=A.mx*ltv('s')+A.ms*ltv('m')+A.me*ltv('e');
     document.getElementById('m-cac-rec').textContent=`${(blendedCAC/(M[0].arpu*A.gm)).toFixed(1)} mo`;
     document.getElementById('m-ltv-cac').textContent=fmtX(blendedLTV/blendedCAC);
     document.getElementById('m-ndr').textContent=fmtP(M[0].nrr);
     document.getElementById('m-gdr').textContent=fmtP(1-M[0].bc);
- 
+
     const bench=[
       {m:'Annual Growth Rate',ba:'<50%',av:'50-100%',tq:'100-200%',el:'>200%',v:fmtP(growth)},
       {m:'Gross Margin',ba:'<60%',av:'60-70%',tq:'70-80%',el:'>80%',v:'76.0%'},
@@ -1246,19 +1168,19 @@ function render(){
       {m:'CAC Payback',ba:'>24mo',av:'18-24mo',tq:'12-18mo',el:'<12mo',v:`${(blendedCAC/(M[0].arpu*A.gm)).toFixed(0)}mo`},
     ];
     document.getElementById('bench-table').innerHTML=bench.map(b=>`<tr><td>${b.m}</td><td class="r" style="color:var(--red-lt)">${b.ba}</td><td class="r" style="color:var(--grey)">${b.av}</td><td class="r" style="color:var(--gold)">${b.tq}</td><td class="r" style="color:var(--green-lt)">${b.el}</td><td class="r gold" style="font-weight:700">${b.v}</td></tr>`).join('');
- 
+
     mk('chart-r40','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
       {label:'Rule of 40 Score',data:[r40,r40*1.2,r40*1.35],borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,tension:0.4,borderWidth:2.5,pointBackgroundColor:GOLD},
       {label:'Elite Threshold',data:[60,60,60],borderColor:GREEN_LT,borderDash:[4,4],borderWidth:1.5,pointRadius:0,backgroundColor:'transparent'},
       {label:'Top Quartile',data:[40,40,40],borderColor:BLUE,borderDash:[4,4],borderWidth:1.5,pointRadius:0,backgroundColor:'transparent'},
     ]},{scales:{y:{grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
- 
+
     mk('chart-burn','line',{labels:['Year 1','Year 2','Year 3'],datasets:[
       {label:'Burn Multiple',data:[burnMult,Math.max(0,(Math.max(0,M[1].opex-M[1].gp)/(M[2].arr-M[1].arr))),Math.max(0,(Math.max(0,M[2].opex-M[2].gp)/(M[2].arr*0.5)))],borderColor:RED,backgroundColor:RED+'15',fill:true,tension:0.4,borderWidth:2.5,pointBackgroundColor:RED},
       {label:'Elite (<1)',data:[1,1,1],borderColor:GREEN_LT,borderDash:[4,4],borderWidth:1.5,pointRadius:0,backgroundColor:'transparent'},
     ]},{scales:{y:{grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
   }
- 
+
   // MARKET
   if(activeTab==='market'){
     document.getElementById('mkt-som').textContent=fmt(M[2].total);
@@ -1268,20 +1190,20 @@ function render(){
       {label:'1% SAM',data:[420e6,420e6,420e6],borderColor:GREY,backgroundColor:'transparent',borderDash:[4,4],borderWidth:1.5,pointRadius:0},
       {label:'5% SAM',data:[2.1e9,2.1e9,2.1e9],borderColor:BLUE,backgroundColor:'transparent',borderDash:[4,4],borderWidth:1.5,pointRadius:0},
     ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
- 
+
     document.getElementById('funnel-rows').innerHTML=[
       {l:'Total UK Registered',v:'5.5M',p:'100%'},{l:'Active SMEs',v:'3.2M',p:'58%'},
       {l:'Digitally Active',v:'1.8M',p:'33%'},{l:'AI-Ready',v:'540k',p:'10%'},
       {l:'Empire OS SOM Y3',v:fmtN(M[2].c),p:`${(M[2].c/5.5e6*100).toFixed(2)}%`,hi:true},
     ].map(r=>`<div class="fr"><span class="fl">${r.l}</span><div class="fr2"><div class="fv" style="color:${r.hi?'var(--gold)':'var(--white)'}">${r.v}</div><div class="fp">${r.p}</div></div></div>`).join('');
- 
+
     document.getElementById('gov-rows').innerHTML=[
       {l:'ONS Data Licensing',v:'£290M/yr'},{l:'HMRC Analytics',v:'£180M/yr'},
       {l:'Companies House API',v:'£45M/yr'},{l:'Empire OS Y1',v:fmt(M[0].govR),gold:true},
       {l:'Empire OS Y3',v:fmt(M[2].govR),gold:true},
     ].map(r=>`<div class="fr"><span class="fl" style="font-style:italic">${r.l}</span><div class="fv" style="color:${r.gold?'var(--gold)':'var(--grey)'}">${r.v}</div></div>`).join('');
   }
- 
+
   // RUNWAY
   if(activeTab==='runway'){
     const breakdown=sovereignFund>0?`Seed ${fmt(seedFund)} + Sovereign ${fmt(sovereignFund)}`:`Series Seed · 2026`;
@@ -1291,7 +1213,7 @@ function render(){
     document.getElementById('rwy-months').textContent=`${Math.round(runway)} mo`;
     document.getElementById('rwy-bkmrr').textContent=fmt(burnMo);
     document.getElementById('rwy-alloc-title').textContent=`${fmt(TF)} Funding Allocation`;
- 
+
     document.getElementById('prog-bars').innerHTML=[
       {l:'Sales & Marketing',v:C.sm,c:'var(--gold)'},
       {l:'Engineering & Product',v:C.eng,c:'var(--blue)'},
@@ -1300,13 +1222,13 @@ function render(){
       {l:'Legal & Compliance',v:C.leg,c:'var(--grey-dk)'},
       {l:'Infrastructure',v:C.inf,c:'var(--gold-dim)'},
     ].map(r=>`<div class="pr"><div class="ph"><span class="pl">${r.l}</span><span class="pv">${fmt(r.v)} · ${Math.round(r.v/TF*100)}%</span></div><div class="pb"><div class="pf" style="width:${Math.min(100,r.v/TF*100)}%;background:${r.c};"></div></div></div>`).join('');
- 
+
     const cashData=Array.from({length:24},(_,i)=>{const mo=i+1,yr=Math.min(Math.floor(i/12),2);const rev=(M[yr]?.mrr||0)*(mo/(yr*12+12));return{x:`M${mo}`,w:Math.round(TF-burnMo*mo+rev*mo*0.5),b:Math.round(TF-burnMo*mo)};});
     mk('chart-cash','line',{labels:cashData.map(d=>d.x),datasets:[
       {label:'Cash (with revenue)',data:cashData.map(d=>d.w),borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,tension:0.4,borderWidth:2,pointRadius:0},
       {label:'Pure Burn',data:cashData.map(d=>d.b),borderColor:RED,backgroundColor:RED+'10',fill:true,tension:0.4,borderWidth:1.5,borderDash:[4,4],pointRadius:0},
     ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{ticks:{maxTicksLimit:8},grid:{color:'#0E1E3640'}}}});
- 
+
     const tfM=TF/1e6;
     document.getElementById('milestone-rows').innerHTML=[
       {n:'Alpha Launch',t:'M1 to M3',c:fmt(TF*0.16),o:'50 beta companies',k:'NPS > 40'},
@@ -1314,7 +1236,7 @@ function render(){
       {n:'GTM Scale',t:'M6 to M9',c:fmt(TF*0.30),o:'2,000 cos · gov pilot',k:'MRR > £100k'},
       {n:'Series A Readiness',t:'M9 to M13',c:fmt(TF*0.30),o:'5,000+ cos · £250k MRR',k:'ARR > £3M'},
     ].map(r=>`<div class="mile"><span class="mn">${r.n}</span><span class="mt">${r.t}</span><span class="mc">${r.c}</span><span class="mo">${r.o}</span><span class="mk">${r.k}</span></div>`).join('');
- 
+
     const ppData=Array.from({length:36},(_,i)=>{
       const mo=i+1,yr=Math.min(Math.floor(i/12),2);
       const monthShare=(mo-yr*12)/12;
@@ -1328,21 +1250,21 @@ function render(){
       {label:'Monthly Profit',data:ppData.map(d=>d.profit),borderColor:GREEN_LT,backgroundColor:GREEN_LT+'15',fill:true,tension:0.4,borderWidth:2,pointRadius:0},
     ]},{scales:{y:{ticks:{callback:fmt},grid:{color:'#0E1E3640'}},x:{ticks:{maxTicksLimit:9},grid:{color:'#0E1E3640'}}}});
   }
- 
+
   // SENSITIVITY
   if(activeTab==='sensitivity'){
     const churns=[1,2,3,4,5];
     const minV=Math.min(...S.flatMap(r=>r.vals)),maxV=Math.max(...S.flatMap(r=>r.vals));
     document.getElementById('sensitivity-table').innerHTML=`<thead><tr><th style="text-align:left">Growth/Churn</th>${churns.map(c=>`<th>${c}% mo</th>`).join('')}</tr></thead><tbody>${S.map(r=>`<tr><td class="rl">${r.g}×/yr</td>${r.vals.map(v=>{const it=Math.min(1,Math.max(0,(v-minV)/(maxV-minV)));return`<td style="background:rgba(200,160,32,${it*0.32});color:${it>0.6?'var(--gold)':it>0.3?'var(--white)':'var(--grey-dk)'};font-weight:${it>0.5?700:400}">£${v}M</td>`;}).join('')}</tr>`).join('')}</tbody>`;
- 
+
     const arpuRange=[35,45,55,65,75,85];
     mk('chart-arpu-sens','line',{labels:arpuRange.map(a=>`£${a}`),datasets:[
       {label:'Y1 ARR',data:arpuRange.map(a=>Math.round(M[0].c*a*12/1e6*10)/10),borderColor:GOLD_DIM,backgroundColor:'transparent',borderWidth:1.5,tension:0.4,pointRadius:3,pointBackgroundColor:GOLD_DIM},
       {label:'Y3 ARR',data:arpuRange.map(a=>Math.round(M[2].c*a*12/1e6*10)/10),borderColor:GOLD,backgroundColor:GOLD+'18',fill:true,borderWidth:2.5,tension:0.4,pointRadius:4,pointBackgroundColor:GOLD},
     ]},{scales:{y:{ticks:{callback:v=>`£${v}M`},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
- 
+
     mk('chart-bk-sens','line',{labels:arpuRange.map(a=>`£${a}`),datasets:[{label:'Companies to break-even',data:arpuRange.map(a=>Math.round(burnMo/(a*A.gm))),borderColor:BLUE,backgroundColor:BLUE+'15',fill:true,tension:0.4,borderWidth:2,pointRadius:4,pointBackgroundColor:BLUE}]},{scales:{y:{ticks:{callback:v=>v.toLocaleString()},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
- 
+
     const baseY3=M[2].arr;
     const tornado=[
       {var:'Growth Rate ±50%',low:baseY3*0.5,high:baseY3*1.5},
@@ -1357,7 +1279,7 @@ function render(){
       {label:'Upside',data:tornado.map(t=>t.high-baseY3),backgroundColor:GREEN_LT+'CC'},
     ]},{indexAxis:'y',scales:{x:{ticks:{callback:v=>fmt(Math.abs(v))},stacked:false,grid:{color:'#0E1E3640'}},y:{grid:{color:'#0E1E3640'}}}});
   }
- 
+
   // VALUATION
   if(activeTab==='valuation'){
     const baseM=model('base');
@@ -1366,14 +1288,14 @@ function render(){
     document.getElementById('val-mult').textContent=fmtX(post/baseM[0].arr);
     document.getElementById('val-5x').textContent=fmt(M[2].arr*5);
     document.getElementById('val-10x').textContent=fmt(M[2].arr*10);
- 
+
     const multiples=[3,5,7,10,15];
     mk('chart-val','bar',{labels:multiples.map(m=>`${m}× ARR`),datasets:[
       {label:'Bear',data:multiples.map(m=>Math.round(model('bear')[2].arr*m/1e6)),backgroundColor:RED+'BB'},
       {label:'Base',data:multiples.map(m=>Math.round(model('base')[2].arr*m/1e6)),backgroundColor:GOLD+'BB'},
       {label:'Bull',data:multiples.map(m=>Math.round(model('bull')[2].arr*m/1e6)),backgroundColor:GREEN_LT+'BB'},
     ]},{scales:{y:{ticks:{callback:v=>`£${v}M`},grid:{color:'#0E1E3640'}},x:{grid:{color:'#0E1E3640'}}}});
- 
+
     document.getElementById('comp-rows').innerHTML=[
       {n:'Notion',s:'Productivity OS',mult:'18× ARR',nrr:'130%'},
       {n:'Rippling',s:'Business OS',mult:'22× ARR',nrr:'145%'},
@@ -1381,14 +1303,14 @@ function render(){
       {n:'Stripe',s:'Fintech Infrastructure',mult:'25× ARR',nrr:'140%'},
       {n:'Empire OS',s:'Business OS + Gov Data',mult:'5 to 15× ARR',nrr:fmtP(M[0].nrr),hi:true},
     ].map(r=>`<div class="comp ${r.hi?'hi':''}"><div><div class="cn" style="color:${r.hi?'var(--gold)':'var(--white)'}">${r.n}</div><div class="cs">${r.s}</div></div><div class="cm"><div class="cmx"><span class="cl">Multiple</span><span class="cv">${r.mult}</span></div><div class="cmx"><span class="cl">NRR</span><span class="cv">${r.nrr}</span></div></div></div>`).join('');
- 
+
     document.getElementById('moic-title').textContent=`Investor Return Scenarios (${fmt(TF)} · ${fmtP(stake)} Stake)`;
     document.getElementById('moic-cards').innerHTML=[
       {l:`Bear · 3× ARR · Y3`,sc:'bear',mult:3,c:'var(--red-lt)'},
       {l:`Base · 7× ARR · Y3`,sc:'base',mult:7,c:'var(--gold)'},
       {l:`Bull · 12× ARR · Y3`,sc:'bull',mult:12,c:'var(--green-lt)'},
     ].map(r=>{const m3=model(r.sc)[2],ret=m3.arr*r.mult*stake,moic=ret/TF;return`<div class="moic"><p class="ml2">${r.l}</p><div class="mr"><div class="ms2"><span class="ml3">Investor Return</span><span class="mv2" style="color:${r.c}">${fmt(ret)}</span></div><div class="ms2" style="text-align:right"><span class="ml3">MOIC</span><span class="mv2" style="color:${r.c}">${fmtX(moic)}</span></div></div></div>`;}).join('');
- 
+
     document.getElementById('exits-rows').innerHTML=[
       {n:'Wise (UK Listing)',s:'Cross-border fintech',v:'£8.0B',mult:'12× rev','y':'2021'},
       {n:'Hopin (Acquisition)',s:'Events platform','v':'£4.2B','mult':'18× ARR','y':'2021'},
@@ -1397,7 +1319,7 @@ function render(){
       {n:'Cazoo',s:'Auto marketplace','v':'£5.5B','mult':'7× rev','y':'2021'},
     ].map(r=>`<div class="comp"><div><div class="cn">${r.n}</div><div class="cs">${r.s} · ${r.y}</div></div><div class="cm"><div class="cmx"><span class="cl">Value</span><span class="cv">${r.v}</span></div><div class="cmx"><span class="cl">Multiple</span><span class="cv">${r.mult}</span></div></div></div>`).join('');
   }
- 
+
   // CAP TABLE
   if(activeTab==='captable'){
     document.getElementById('cap-pre').textContent=fmt(A.preMoney);
@@ -1405,7 +1327,7 @@ function render(){
     document.getElementById('cap-post-sub').textContent=`After ${fmt(TF)} seed`;
     document.getElementById('cap-stake').textContent=fmtP(stake);
     document.getElementById('cap-founder').textContent=fmtP(founder);
- 
+
     const founderShares=Math.round(founder*1e7);
     const investorShares=Math.round(stake*1e7);
     const totalShares=founderShares+investorShares;
@@ -1415,7 +1337,7 @@ function render(){
       {h:'Option Pool (Reserved)',inv:'—',pct:'10.0% (post)',sh:'1,000,000',c:'var(--grey)'},
       {h:'Total Outstanding',inv:fmt(TF),pct:'100%',sh:(totalShares).toLocaleString(),c:'var(--white)',bold:true},
     ].map(r=>`<div class="cap-row"><div class="cn2" style="color:${r.c};font-weight:${r.bold?700:400}">${r.h}</div><div class="cv2 r" style="text-align:right;color:var(--white)">${r.inv}</div><div class="cv2 r" style="text-align:right;color:${r.c}">${r.pct}</div><div class="cv2 r" style="text-align:right;color:var(--grey)">${r.sh}</div></div>`).join('');
- 
+
     const founderPct=founder*100;
     const seedPct=stake*100;
     mk('chart-dilution','bar',{labels:['Pre-Seed','Post-Seed','Post-Series A','Post-Series B'],datasets:[
@@ -1425,7 +1347,7 @@ function render(){
       {label:'Series B',data:[0,0,0,21],backgroundColor:GOLD_DIM,stack:'a'},
       {label:'Option Pool',data:[0,0,9.5,8],backgroundColor:GREY,stack:'a'},
     ]},{scales:{y:{ticks:{callback:v=>`${v}%`},stacked:true,grid:{color:'#0E1E3640'}},x:{stacked:true,grid:{color:'#0E1E3640'}}}});
- 
+
     document.getElementById('exit-table').innerHTML=[
       {ev:50e6,y:'Y3 (5× ARR)',fp:founder*0.8,mult:1},
       {ev:100e6,y:'Y3 (10× ARR)',fp:founder*0.8,mult:1},
@@ -1439,7 +1361,7 @@ function render(){
       return`<tr><td class="gold" style="font-weight:700">${fmt(r.ev)}</td><td class="r blue">${r.y}</td><td class="r val">${fmtP(r.fp)}</td><td class="r gold">${fmt(fpr)}</td><td class="r green">${fmt(ir)} (${fmtX(moic)} MOIC)</td></tr>`;
     }).join('');
   }
- 
+
   // RISK
   if(activeTab==='risk'){
     document.getElementById('risk-list').innerHTML=[
@@ -1450,7 +1372,7 @@ function render(){
       {sev:'medium',h:'Regulatory Change in AI/Data Space',l:'Medium',i:'£300k compliance overhead',m:'British registration, UK data residency, GDPR-native architecture. Active engagement with ICO. Built-in audit trail and data sovereignty controls from Day 1.'},
       {sev:'low',h:'Founder Concentration Risk',l:'Low',i:'Operational continuity',m:'Key-person insurance in Series A terms. Senior leadership team being recruited in Y1. Documented operating procedures and decision frameworks (Empire OS itself codifies this).'},
     ].map(r=>`<div class="risk ${r.sev}"><h4>${r.h}</h4><div class="rmeta"><span>Severity: <strong>${r.sev.toUpperCase()}</strong></span><span>Likelihood: <strong>${r.l}</strong></span><span>Impact: <strong>${r.i}</strong></span></div><p class="rmit"><strong style="color:var(--gold)">Mitigation:</strong> ${r.m}</p></div>`).join('');
- 
+
     mk('chart-risk','scatter',{datasets:[{
       label:'Risks',
       data:[
@@ -1461,7 +1383,7 @@ function render(){
     }]},{scales:{x:{title:{display:true,text:'Likelihood %',color:GREY},min:0,max:100,grid:{color:'#0E1E3640'},ticks:{callback:v=>`${v}%`}},y:{title:{display:true,text:'Impact %',color:GREY},min:0,max:100,grid:{color:'#0E1E3640'},ticks:{callback:v=>`${v}%`}}},plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:c=>`${c.raw.name}: ${c.raw.x}% × ${c.raw.y}%`}}}});
   }
 }
- 
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // BOOT
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1476,4 +1398,3 @@ window.addEventListener('load',()=>{
 </script>
 </body>
 </html>
- 
